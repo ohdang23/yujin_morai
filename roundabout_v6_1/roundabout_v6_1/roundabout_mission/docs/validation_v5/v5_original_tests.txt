@@ -1,0 +1,379 @@
+test_accepted_gap_requests_acceleration_through_actual_driver (test_approach_and_gap.ApproachAndGap.test_accepted_gap_requests_acceleration_through_actual_driver) ... ok
+test_blocked_and_clear_frames_do_not_toggle_approach_to_merge (test_approach_and_gap.ApproachAndGap.test_blocked_and_clear_frames_do_not_toggle_approach_to_merge) ... ok
+test_explicit_three_mps_ceiling_is_respected (test_approach_and_gap.ApproachAndGap.test_explicit_three_mps_ceiling_is_respected) ... ok
+test_fast_candidate_can_clear_fast_car_without_relaxing_boxes (test_approach_and_gap.ApproachAndGap.test_fast_candidate_can_clear_fast_car_without_relaxing_boxes) ... FAIL
+test_fast_candidate_is_rejected_when_it_catches_a_slow_lead (test_approach_and_gap.ApproachAndGap.test_fast_candidate_is_rejected_when_it_catches_a_slow_lead) ... FAIL
+test_log_position_confirms_loss_without_claiming_imminent_collision (test_approach_and_gap.ApproachAndGap.test_log_position_confirms_loss_without_claiming_imminent_collision) ... FAIL
+test_loss_reconfirmation_progresses_during_blocked_traffic (test_approach_and_gap.ApproachAndGap.test_loss_reconfirmation_progresses_during_blocked_traffic) ... FAIL
+test_lost_moving_history_does_not_full_brake_approach (test_approach_and_gap.ApproachAndGap.test_lost_moving_history_does_not_full_brake_approach) ... ok
+test_roadside_fragment_is_still_checked_as_geometry (test_approach_and_gap.ApproachAndGap.test_roadside_fragment_is_still_checked_as_geometry) ... ok
+test_safe_confirmation_requires_new_sensor_frames (test_approach_and_gap.ApproachAndGap.test_safe_confirmation_requires_new_sensor_frames) ... ok
+test_stationary_obstacle_and_stale_inputs_still_stop (test_approach_and_gap.ApproachAndGap.test_stationary_obstacle_and_stale_inputs_still_stop) ... ok
+test_adjacent_car_not_lead (test_core.Scenarios.test_adjacent_car_not_lead) ... ok
+test_case10_imminent_collision_stops_commit (test_core.Scenarios.test_case10_imminent_collision_stops_commit) ... ok
+test_case1_empty_commits (test_core.Scenarios.test_case1_empty_commits) ... ok
+test_case2_close_approach_waits_then_goes (test_core.Scenarios.test_case2_close_approach_waits_then_goes) ... ok
+test_case3_far_car_allows (test_core.Scenarios.test_case3_far_car_allows) ... ok
+test_case4_all_vehicles_checked (test_core.Scenarios.test_case4_all_vehicles_checked) ... ok
+test_case5_slow_lead_limits_speed (test_core.Scenarios.test_case5_slow_lead_limits_speed) ... ok
+test_case6_lead_accelerates_smoothly (test_core.Scenarios.test_case6_lead_accelerates_smoothly) ... FAIL
+test_case7_lead_brakes (test_core.Scenarios.test_case7_lead_brakes) ... ok
+test_case8_missing_lead_held (test_core.Scenarios.test_case8_missing_lead_held) ... ok
+test_case9_rear_detection_does_not_cancel_commit (test_core.Scenarios.test_case9_rear_detection_does_not_cancel_commit) ... ok
+test_eta_from_rest (test_core.Scenarios.test_eta_from_rest) ... ok
+test_exit (test_core.Scenarios.test_exit) ... ok
+test_header_freshness_and_wall_watchdog (test_core.Scenarios.test_header_freshness_and_wall_watchdog) ... ok
+test_invalid_config_rejected (test_core.Scenarios.test_invalid_config_rejected) ... ok
+test_nan_rejected (test_core.Scenarios.test_nan_rejected) ... ok
+test_off_path (test_core.Scenarios.test_off_path) ... ok
+test_parse_actual_fields (test_core.Scenarios.test_parse_actual_fields) ... ok
+test_passed_vehicle_excluded (test_core.Scenarios.test_passed_vehicle_excluded) ... ok
+test_safe_debounce_reset (test_core.Scenarios.test_safe_debounce_reset) ... ok
+test_side_lidar_fragment_not_emergency (test_core.Scenarios.test_side_lidar_fragment_not_emergency) ... ok
+test_spawn_inside_not_authorized (test_core.Scenarios.test_spawn_inside_not_authorized) ... ok
+test_stale_input_during_commit (test_core.Scenarios.test_stale_input_during_commit) ... ok
+test_static_conflict_blocks (test_core.Scenarios.test_static_conflict_blocks) ... ok
+test_static_off_path_not_candidate (test_core.Scenarios.test_static_off_path_not_candidate) ... ok
+test_track_hold_expiry_does_not_release (test_core.Scenarios.test_track_hold_expiry_does_not_release) ... FAIL
+test_wrong_direction_excluded (test_core.Scenarios.test_wrong_direction_excluded) ... ok
+test_dead_publisher_wall_watchdog (test_driver_adapter.DriverAdapter.test_dead_publisher_wall_watchdog) ... ok
+test_dryrun_only_preview (test_driver_adapter.DriverAdapter.test_dryrun_only_preview) ... ok
+test_emergency_bypasses_smoothing (test_driver_adapter.DriverAdapter.test_emergency_bypasses_smoothing) ... ok
+test_goal_stops (test_driver_adapter.DriverAdapter.test_goal_stops) ... ok
+test_pedal_mode_and_rate_limit (test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit) ... FAIL
+test_stale_status_brakes (test_driver_adapter.DriverAdapter.test_stale_status_brakes) ... ok
+test_sudden_slow_lead_produces_brake (test_driver_adapter.DriverAdapter.test_sudden_slow_lead_produces_brake) ... ok
+test_zero_speed_normal_stop_holds (test_driver_adapter.DriverAdapter.test_zero_speed_normal_stop_holds) ... ok
+test_car_past_old_conflict_is_not_ignored_for_next_lap (test_prediction.TrajectoryPrediction.test_car_past_old_conflict_is_not_ignored_for_next_lap) ... ok
+test_curved_id_handoff_compares_propagated_velocity (test_prediction.TrajectoryPrediction.test_curved_id_handoff_compares_propagated_velocity) ... FAIL
+test_curved_missing_track_is_not_extrapolated_straight (test_prediction.TrajectoryPrediction.test_curved_missing_track_is_not_extrapolated_straight) ... ok
+test_empty_road_has_complete_candidate (test_prediction.TrajectoryPrediction.test_empty_road_has_complete_candidate) ... ok
+test_incomplete_horizon_never_authorizes_entry (test_prediction.TrajectoryPrediction.test_incomplete_horizon_never_authorizes_entry) ... ok
+test_new_conflict_revokes_commit_before_physical_entry (test_prediction.TrajectoryPrediction.test_new_conflict_revokes_commit_before_physical_entry) ... FAIL
+test_safe_phase_allows_and_following_car_blocks (test_prediction.TrajectoryPrediction.test_safe_phase_allows_and_following_car_blocks) ... ok
+test_stationary_in_path_is_a_predicted_hazard (test_prediction.TrajectoryPrediction.test_stationary_in_path_is_a_predicted_hazard) ... FAIL
+test_stationary_velocity_residual_does_not_drift_a_curb_into_route (test_prediction.TrajectoryPrediction.test_stationary_velocity_residual_does_not_drift_a_curb_into_route) ... FAIL
+test_temporal_padding_catches_fast_crossing_between_samples (test_prediction.TrajectoryPrediction.test_temporal_padding_catches_fast_crossing_between_samples) ... ok
+test_ambiguous_ids_are_not_merged (test_track_recovery.Recovery.test_ambiguous_ids_are_not_merged) ... ERROR
+test_authorized_stop_after_entry_before_conflict_can_recheck (test_track_recovery.Recovery.test_authorized_stop_after_entry_before_conflict_can_recheck) ... FAIL
+test_clear_scene_recovers_then_rechecks_before_commit (test_track_recovery.Recovery.test_clear_scene_recovers_then_rechecks_before_commit) ... FAIL
+test_different_vehicle_blocks_entry_but_not_scene_reconfirmation (test_track_recovery.Recovery.test_different_vehicle_blocks_entry_but_not_scene_reconfirmation) ... FAIL
+test_duplicate_frames_cannot_release (test_track_recovery.Recovery.test_duplicate_frames_cannot_release) ... FAIL
+test_id_handoff_removes_old_history_and_evaluates_new_track (test_track_recovery.Recovery.test_id_handoff_removes_old_history_and_evaluates_new_track) ... FAIL
+test_inside_conflict_requires_reacquisition (test_track_recovery.Recovery.test_inside_conflict_requires_reacquisition) ... FAIL
+test_lidar_dropout_restarts_confirmation (test_track_recovery.Recovery.test_lidar_dropout_restarts_confirmation) ... FAIL
+test_one_old_id_cannot_transfer_to_two_new_ids (test_track_recovery.Recovery.test_one_old_id_cannot_transfer_to_two_new_ids) ... ok
+test_same_id_returns_but_current_hazard_still_stops (test_track_recovery.Recovery.test_same_id_returns_but_current_hazard_still_stops) ... FAIL
+test_stationary_obstacle_cannot_be_cleared_by_empty_lists (test_track_recovery.Recovery.test_stationary_obstacle_cannot_be_cleared_by_empty_lists) ... FAIL
+test_thirty_one_old_moving_ids_do_not_latch_forever (test_track_recovery.Recovery.test_thirty_one_old_moving_ids_do_not_latch_forever) ... FAIL
+test_timer_ticks_without_new_frames_cannot_release (test_track_recovery.Recovery.test_timer_ticks_without_new_frames_cannot_release) ... FAIL
+test_snapshot_is_32ms_not_evidence_of_id_switching (test_track_recovery.UploadedSnapshot.test_snapshot_is_32ms_not_evidence_of_id_switching) ... ok
+test_dead_publisher_wall_watchdog (test_driver_adapter.DriverAdapter.test_dead_publisher_wall_watchdog) ... ok
+test_dryrun_only_preview (test_driver_adapter.DriverAdapter.test_dryrun_only_preview) ... ok
+test_emergency_bypasses_smoothing (test_driver_adapter.DriverAdapter.test_emergency_bypasses_smoothing) ... ok
+test_goal_stops (test_driver_adapter.DriverAdapter.test_goal_stops) ... ok
+test_pedal_mode_and_rate_limit (test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit) ... FAIL
+test_stale_status_brakes (test_driver_adapter.DriverAdapter.test_stale_status_brakes) ... ok
+test_sudden_slow_lead_produces_brake (test_driver_adapter.DriverAdapter.test_sudden_slow_lead_produces_brake) ... ok
+test_zero_speed_normal_stop_holds (test_driver_adapter.DriverAdapter.test_zero_speed_normal_stop_holds) ... ok
+test_cruise_positive_accel_even_with_inactive_zero_mission_target (test_v4_regressions.DriverRegression.test_cruise_positive_accel_even_with_inactive_zero_mission_target) ... ok
+test_dead_publisher_wall_watchdog (test_v4_regressions.DriverRegression.test_dead_publisher_wall_watchdog) ... ok
+test_diagnostics_identify_emergency_stop (test_v4_regressions.DriverRegression.test_diagnostics_identify_emergency_stop) ... ok
+test_dryrun_only_preview (test_v4_regressions.DriverRegression.test_dryrun_only_preview) ... ok
+test_duplicate_odom_does_not_replace_pose_or_refresh_watchdog (test_v4_regressions.DriverRegression.test_duplicate_odom_does_not_replace_pose_or_refresh_watchdog) ... ok
+test_emergency_bypasses_smoothing (test_v4_regressions.DriverRegression.test_emergency_bypasses_smoothing) ... ok
+test_goal_stops (test_v4_regressions.DriverRegression.test_goal_stops) ... ok
+test_pedal_mode_and_rate_limit (test_v4_regressions.DriverRegression.test_pedal_mode_and_rate_limit) ... FAIL
+test_stale_status_brakes (test_v4_regressions.DriverRegression.test_stale_status_brakes) ... ok
+test_sudden_slow_lead_produces_brake (test_v4_regressions.DriverRegression.test_sudden_slow_lead_produces_brake) ... ok
+test_zero_speed_normal_stop_holds (test_v4_regressions.DriverRegression.test_zero_speed_normal_stop_holds) ... ok
+test_repeated_packet_preserves_sample_without_extending_age (test_v4_regressions.GateTimestampRegression.test_repeated_packet_preserves_sample_without_extending_age) ... ok
+test_crossing_vehicle_ttc (test_v4_regressions.GeometryAndScope.test_crossing_vehicle_ttc) ... ok
+test_lidar_watchdog_at_approach (test_v4_regressions.GeometryAndScope.test_lidar_watchdog_at_approach) ... ok
+test_mission_never_increases_teammates_speed_cap (test_v4_regressions.GeometryAndScope.test_mission_never_increases_teammates_speed_cap) ... ok
+test_normal_route_does_not_wait_for_roundabout_lidar (test_v4_regressions.GeometryAndScope.test_normal_route_does_not_wait_for_roundabout_lidar) ... ok
+test_sideways_long_vehicle_is_not_excluded_by_width (test_v4_regressions.GeometryAndScope.test_sideways_long_vehicle_is_not_excluded_by_width) ... ok
+test_slow_merge_checks_traffic_beyond_nominal_horizon (test_v4_regressions.GeometryAndScope.test_slow_merge_checks_traffic_beyond_nominal_horizon) ... ok
+test_static_conflict_does_not_expire_at_prediction_horizon (test_v4_regressions.GeometryAndScope.test_static_conflict_does_not_expire_at_prediction_horizon) ... FAIL
+test_stationary_obstacle_on_route_is_retained (test_v4_regressions.GeometryAndScope.test_stationary_obstacle_on_route_is_retained) ... ok
+test_user_roadside_fragments_with_north_heading (test_v4_regressions.GeometryAndScope.test_user_roadside_fragments_with_north_heading) ... ok
+test_case1_approach_pass_clear_commit (test_v5_entry.EntryV5.test_case1_approach_pass_clear_commit) ... ok
+test_case2_id_change_remains_unsafe (test_v5_entry.EntryV5.test_case2_id_change_remains_unsafe) ... ok
+test_case3_short_occlusion (test_v5_entry.EntryV5.test_case3_short_occlusion) ... ok
+test_case4_split_partial_boxes (test_v5_entry.EntryV5.test_case4_split_partial_boxes) ... ok
+test_case5_exact_confirmation (test_v5_entry.EntryV5.test_case5_exact_confirmation) ... ok
+test_case6_latch_id_change (test_v5_entry.EntryV5.test_case6_latch_id_change) ... ok
+test_case7_emergency_after_commit (test_v5_entry.EntryV5.test_case7_emergency_after_commit) ... ok
+test_case8_roadside_stationary_noise (test_v5_entry.EntryV5.test_case8_roadside_stationary_noise) ... ok
+test_emergency_stop_command_fields (test_v5_entry.EntryV5.test_emergency_stop_command_fields) ... ok
+test_id_permutation_has_identical_outputs (test_v5_entry.EntryV5.test_id_permutation_has_identical_outputs) ... ok
+test_nearly_stopped_velocity_during_occlusion_keeps_hazard (test_v5_entry.EntryV5.test_nearly_stopped_velocity_during_occlusion_keeps_hazard) ... ok
+test_safe_timer_not_reset_by_harmless_id_change (test_v5_entry.EntryV5.test_safe_timer_not_reset_by_harmless_id_change) ... ok
+test_stationary_on_path_retained_after_loss (test_v5_entry.EntryV5.test_stationary_on_path_retained_after_loss) ... ok
+test_timer_ticks_and_duplicates_do_not_confirm (test_v5_entry.EntryV5.test_timer_ticks_and_duplicates_do_not_confirm) ... ok
+test_watchdog_brakes_latch_preserved (test_v5_entry.EntryV5.test_watchdog_brakes_latch_preserved) ... ok
+test_confirmed_gap_green_emergency_red_and_expiry (test_v5_visualization.Visualization.test_confirmed_gap_green_emergency_red_and_expiry) ... ok
+
+======================================================================
+ERROR: test_ambiguous_ids_are_not_merged (test_track_recovery.Recovery.test_ambiguous_ids_are_not_merged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 109, in test_ambiguous_ids_are_not_merged
+    self.assertIn(101,self.d.cache)
+                      ^^^^^^^^^^^^
+AttributeError: 'Decision' object has no attribute 'cache'
+
+======================================================================
+FAIL: test_fast_candidate_can_clear_fast_car_without_relaxing_boxes (test_approach_and_gap.ApproachAndGap.test_fast_candidate_can_clear_fast_car_without_relaxing_boxes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_approach_and_gap.py", line 122, in test_fast_candidate_can_clear_fast_car_without_relaxing_boxes
+    self.assertEqual(d.predictor.assess(e,[tr],s,d.m['exit'],4.)['predicted_blocking_ids'],[])
+AssertionError: Lists differ: [585] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+585
+
+- [585]
++ []
+
+======================================================================
+FAIL: test_fast_candidate_is_rejected_when_it_catches_a_slow_lead (test_approach_and_gap.ApproachAndGap.test_fast_candidate_is_rejected_when_it_catches_a_slow_lead)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_approach_and_gap.py", line 150, in test_fast_candidate_is_rejected_when_it_catches_a_slow_lead
+    self.assertEqual(d.predictor.assess(e,[tr],s,d.m['exit'],3.)['predicted_blocking_ids'],[])
+AssertionError: Lists differ: [999] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+999
+
+- [999]
++ []
+
+======================================================================
+FAIL: test_log_position_confirms_loss_without_claiming_imminent_collision (test_approach_and_gap.ApproachAndGap.test_log_position_confirms_loss_without_claiming_imminent_collision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_approach_and_gap.py", line 88, in test_log_position_confirms_loss_without_claiming_imminent_collision
+    self.assertEqual(r['track_recovery_reason'],'track_loss_scene_confirming')
+AssertionError: None != 'track_loss_scene_confirming'
+
+======================================================================
+FAIL: test_loss_reconfirmation_progresses_during_blocked_traffic (test_approach_and_gap.ApproachAndGap.test_loss_reconfirmation_progresses_during_blocked_traffic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_approach_and_gap.py", line 51, in test_loss_reconfirmation_progresses_during_blocked_traffic
+    self.assertEqual(r['decision_reason'],'waiting_for_safe_gap')
+AssertionError: 'waiting_conflict_vehicle' != 'waiting_for_safe_gap'
+- waiting_conflict_vehicle
++ waiting_for_safe_gap
+
+
+======================================================================
+FAIL: test_case6_lead_accelerates_smoothly (test_core.Scenarios.test_case6_lead_accelerates_smoothly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_core.py", line 64, in test_case6_lead_accelerates_smoothly
+    self.assertLessEqual(r['target_speed'],1+.8*.05+1e-8)
+AssertionError: 1.125 not less than or equal to 1.04000001
+
+======================================================================
+FAIL: test_track_hold_expiry_does_not_release (test_core.Scenarios.test_track_hold_expiry_does_not_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_core.py", line 98, in test_track_hold_expiry_does_not_release
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_pedal_mode_and_rate_limit (test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_driver_adapter.py", line 63, in test_pedal_mode_and_rate_limit
+    self.assertLessEqual(cmd.accel,.020001)
+AssertionError: 0.14999999999999147 not less than or equal to 0.020001
+
+======================================================================
+FAIL: test_curved_id_handoff_compares_propagated_velocity (test_prediction.TrajectoryPrediction.test_curved_id_handoff_compares_propagated_velocity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_prediction.py", line 54, in test_curved_id_handoff_compares_propagated_velocity
+    self.assertGreater(math.hypot(new.vx-t.vx,new.vy-t.vy),self.cfg['reid_velocity_delta_mps'])
+AssertionError: 2.9015282268087805 not greater than 3.0
+
+======================================================================
+FAIL: test_new_conflict_revokes_commit_before_physical_entry (test_prediction.TrajectoryPrediction.test_new_conflict_revokes_commit_before_physical_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_prediction.py", line 62, in test_new_conflict_revokes_commit_before_physical_entry
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_stationary_in_path_is_a_predicted_hazard (test_prediction.TrajectoryPrediction.test_stationary_in_path_is_a_predicted_hazard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_prediction.py", line 79, in test_stationary_in_path_is_a_predicted_hazard
+    self.assertIn(4,self.assess([t])['predicted_blocking_ids'])
+AssertionError: 4 not found in []
+
+======================================================================
+FAIL: test_stationary_velocity_residual_does_not_drift_a_curb_into_route (test_prediction.TrajectoryPrediction.test_stationary_velocity_residual_does_not_drift_a_curb_into_route)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_prediction.py", line 97, in test_stationary_velocity_residual_does_not_drift_a_curb_into_route
+    self.assertEqual(r['predicted_blocking_ids'],[7])
+AssertionError: Lists differ: [] != [7]
+
+Second list contains 1 additional elements.
+First extra element 0:
+7
+
+- []
++ [7]
+?  +
+
+
+======================================================================
+FAIL: test_authorized_stop_after_entry_before_conflict_can_recheck (test_track_recovery.Recovery.test_authorized_stop_after_entry_before_conflict_can_recheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 119, in test_authorized_stop_after_entry_before_conflict_can_recheck
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_clear_scene_recovers_then_rechecks_before_commit (test_track_recovery.Recovery.test_clear_scene_recovers_then_rechecks_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 32, in test_clear_scene_recovers_then_rechecks_before_commit
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_different_vehicle_blocks_entry_but_not_scene_reconfirmation (test_track_recovery.Recovery.test_different_vehicle_blocks_entry_but_not_scene_reconfirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 69, in test_different_vehicle_blocks_entry_but_not_scene_reconfirmation
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_duplicate_frames_cannot_release (test_track_recovery.Recovery.test_duplicate_frames_cannot_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 53, in test_duplicate_frames_cannot_release
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_id_handoff_removes_old_history_and_evaluates_new_track (test_track_recovery.Recovery.test_id_handoff_removes_old_history_and_evaluates_new_track)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 100, in test_id_handoff_removes_old_history_and_evaluates_new_track
+    self.assertEqual(r['id_handoffs'],[[101,202]])
+AssertionError: Lists differ: [] != [[101, 202]]
+
+Second list contains 1 additional elements.
+First extra element 0:
+[101, 202]
+
+- []
++ [[101, 202]]
+
+======================================================================
+FAIL: test_inside_conflict_requires_reacquisition (test_track_recovery.Recovery.test_inside_conflict_requires_reacquisition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 88, in test_inside_conflict_requires_reacquisition
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_lidar_dropout_restarts_confirmation (test_track_recovery.Recovery.test_lidar_dropout_restarts_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 61, in test_lidar_dropout_restarts_confirmation
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_same_id_returns_but_current_hazard_still_stops (test_track_recovery.Recovery.test_same_id_returns_but_current_hazard_still_stops)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 92, in test_same_id_returns_but_current_hazard_still_stops
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_stationary_obstacle_cannot_be_cleared_by_empty_lists (test_track_recovery.Recovery.test_stationary_obstacle_cannot_be_cleared_by_empty_lists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 82, in test_stationary_obstacle_cannot_be_cleared_by_empty_lists
+    self.assertEqual(r['decision_reason'],'lost_stationary_obstacle_on_path')
+AssertionError: 'waiting_conflict_vehicle' != 'lost_stationary_obstacle_on_path'
+- waiting_conflict_vehicle
++ lost_stationary_obstacle_on_path
+
+
+======================================================================
+FAIL: test_thirty_one_old_moving_ids_do_not_latch_forever (test_track_recovery.Recovery.test_thirty_one_old_moving_ids_do_not_latch_forever)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 130, in test_thirty_one_old_moving_ids_do_not_latch_forever
+    self.assertEqual(len(recovered),31)
+AssertionError: 0 != 31
+
+======================================================================
+FAIL: test_timer_ticks_without_new_frames_cannot_release (test_track_recovery.Recovery.test_timer_ticks_without_new_frames_cannot_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 46, in test_timer_ticks_without_new_frames_cannot_release
+    self.lose()
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_track_recovery.py", line 26, in lose
+    self.assertTrue(r['stop_required'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_pedal_mode_and_rate_limit (test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_driver_adapter.py", line 63, in test_pedal_mode_and_rate_limit
+    self.assertLessEqual(cmd.accel,.020001)
+AssertionError: 0.14999999999999147 not less than or equal to 0.020001
+
+======================================================================
+FAIL: test_pedal_mode_and_rate_limit (test_v4_regressions.DriverRegression.test_pedal_mode_and_rate_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_driver_adapter.py", line 63, in test_pedal_mode_and_rate_limit
+    self.assertLessEqual(cmd.accel,.020001)
+AssertionError: 0.14999999999999147 not less than or equal to 0.020001
+
+======================================================================
+FAIL: test_static_conflict_does_not_expire_at_prediction_horizon (test_v4_regressions.GeometryAndScope.test_static_conflict_does_not_expire_at_prediction_horizon)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/b6549e507279/roundabout_mission/test/test_v4_regressions.py", line 79, in test_static_conflict_does_not_expire_at_prediction_horizon
+    self.assertEqual(r['blocking_vehicle_id'],8)
+AssertionError: None != 8
+
+----------------------------------------------------------------------
+Ran 115 tests in 1.928s
+
+FAILED (failures=25, errors=1)

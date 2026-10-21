@@ -1,0 +1,13 @@
+{
+  "python38_syntax": "PASS",
+  "xml": "PASS",
+  "yaml": "PASS",
+  "all_original_yaml_values": "UNCHANGED",
+  "driver_prediction_integration_launch": "BYTE_IDENTICAL",
+  "new_parameters": {
+    "entry_occlusion_hold_s": 0.8,
+    "entry_vehicle_length_m": 4.5,
+    "entry_vehicle_width_m": 1.8
+  },
+  "baseline_zip_sha256": "36023f5b7d7c196f4ece4f6186bdb6cfcae1d06655b75ae3703b9a2d5252467f"
+}

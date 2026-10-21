@@ -1,0 +1,710 @@
+[
+  {
+    "seed": 1,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 39.3,
+    "max_path_error": 0.247,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 181,
+      "lead_following_approach": 5,
+      "wait": 6,
+      "waiting_for_safe_gap": 2,
+      "commit": 104,
+      "lead_following": 42,
+      "follow": 53,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 3.1557312711756165,
+    "final_s": 932.8007548635528,
+    "gate_ms_p95": 4.83,
+    "wall_seconds": 1.76,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 1.6123709293488147,
+        "v": 6.237168684686163,
+        "length": 5.673211166418149,
+        "width": 1.7785483180175952,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.243152630637912,
+      "brake_gain": 6.174236597183107,
+      "drag": 0.08606371890891051,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 2,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 50.9,
+    "max_path_error": 0.251,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 140,
+      "lead_following_approach": 44,
+      "lead_following": 72,
+      "waiting_for_safe_gap": 119,
+      "commit": 81,
+      "follow": 53,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 3.202478515792574,
+    "final_s": 932.9423234900349,
+    "gate_ms_p95": 16.58,
+    "wall_seconds": 4.11,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 11.472411262670992,
+        "v": 6.739137435296747,
+        "length": 3.1979297870438304,
+        "width": 1.6594103966112452,
+        "id": 1
+      },
+      {
+        "s": 65.98689059068184,
+        "v": 5.679849945342617,
+        "length": 5.344056405040773,
+        "width": 1.815695520312401,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.408916248517693,
+      "brake_gain": 6.410202600461257,
+      "drag": 0.08324816068448013,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 3,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 75.3,
+    "max_path_error": 0.239,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 149,
+      "lead_following_approach": 32,
+      "lead_following": 95,
+      "waiting_for_safe_gap": 312,
+      "commit": 96,
+      "follow": 69,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 2.4279883247724983,
+    "final_s": 932.8797938292296,
+    "gate_ms_p95": 19.66,
+    "wall_seconds": 9.07,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 2.8555755251026964,
+        "v": 4.721146126479759,
+        "length": 4.294843082918277,
+        "width": 2.0227440270173362,
+        "id": 1
+      },
+      {
+        "s": 44.815913018048946,
+        "v": 2.3276442961990655,
+        "length": 3.0460879704420596,
+        "width": 2.186228357467522,
+        "id": 2
+      },
+      {
+        "s": 77.72678690944068,
+        "v": 3.171654805233482,
+        "length": 6.48475692428662,
+        "width": 1.9291844552657136,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.754692176911583,
+      "brake_gain": 6.214529813049002,
+      "drag": 0.08556272562176648,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 4,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 48.3,
+    "max_path_error": 0.238,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 120,
+      "lead_following_approach": 63,
+      "lead_following": 91,
+      "waiting_for_safe_gap": 38,
+      "commit": 101,
+      "follow": 70,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 2.3919036929378663,
+    "final_s": 932.8338941637807,
+    "gate_ms_p95": 19.89,
+    "wall_seconds": 3.71,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 2.8325770768492142,
+        "v": 2.515830171153579,
+        "length": 4.386203849137384,
+        "width": 1.7084805895616872,
+        "id": 1
+      },
+      {
+        "s": 28.778633174719303,
+        "v": 4.007955072425374,
+        "length": 6.212842650807016,
+        "width": 2.160316646047066,
+        "id": 2
+      },
+      {
+        "s": 65.14285528319371,
+        "v": 3.109640878451588,
+        "length": 4.878380028611847,
+        "width": 1.7936778504090152,
+        "id": 3
+      },
+      {
+        "s": 86.0133304311171,
+        "v": 2.5309164621576508,
+        "length": 3.7504015140262075,
+        "width": 2.249232941999642,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.7433800731676286,
+      "brake_gain": 6.709978520053485,
+      "drag": 0.09201791354171865,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 5,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 42.7,
+    "max_path_error": 0.241,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 170,
+      "lead_following_approach": 6,
+      "wait": 4,
+      "waiting_for_safe_gap": 8,
+      "commit": 126,
+      "lead_following": 47,
+      "follow": 66,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 2.557927828966537,
+    "final_s": 932.9533874071855,
+    "gate_ms_p95": 4.83,
+    "wall_seconds": 2.02,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 7.474820338676423,
+        "v": 5.708934946303647,
+        "length": 5.783177479479939,
+        "width": 2.259715198643935,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.609847862109897,
+      "brake_gain": 6.883487494998126,
+      "drag": 0.06116020913134459,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 6,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 55.2,
+    "max_path_error": 0.25,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 135,
+      "lead_following_approach": 49,
+      "wait": 5,
+      "waiting_for_safe_gap": 159,
+      "commit": 84,
+      "lead_following": 67,
+      "new_conflict_before_entry": 1,
+      "follow": 52,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 3.249781903475607,
+    "final_s": 932.900528674035,
+    "gate_ms_p95": 16.24,
+    "wall_seconds": 4.66,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 9.520081005139955,
+        "v": 6.109770211598634,
+        "length": 4.697621197758309,
+        "width": 1.7831350380612605,
+        "id": 1
+      },
+      {
+        "s": 55.966324631749295,
+        "v": 5.314092814418839,
+        "length": 4.6458898997255575,
+        "width": 2.131811444568525,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.059740558110763,
+      "brake_gain": 6.655209753906985,
+      "drag": 0.07090792342687882,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 7,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 40.7,
+    "max_path_error": 0.251,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 99,
+      "lead_following_approach": 82,
+      "lead_following": 65,
+      "wait": 2,
+      "waiting_for_safe_gap": 22,
+      "commit": 85,
+      "new_conflict_before_entry": 1,
+      "follow": 51,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 3.3128199854661724,
+    "final_s": 932.9154317979177,
+    "gate_ms_p95": 7.22,
+    "wall_seconds": 2.4,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 3.8859931779979484,
+        "v": 2.7542458696225096,
+        "length": 5.2782706556394885,
+        "width": 1.65070540066728,
+        "id": 1
+      },
+      {
+        "s": 43.737853420432565,
+        "v": 3.8284445845629276,
+        "length": 3.2029962367114737,
+        "width": 1.9552050132325942,
+        "id": 2
+      },
+      {
+        "s": 75.0644866388084,
+        "v": 4.168228418311929,
+        "length": 3.244493982511166,
+        "width": 1.6634991093407057,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.136778783713771,
+      "brake_gain": 6.740278187008057,
+      "drag": 0.06495207844598583,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 8,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.03,
+    "states": [
+      "APPROACH",
+      "WAIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 138,
+      "lead_following_approach": 55,
+      "lead_following": 5,
+      "waiting_for_safe_gap": 1002
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "final_speed": 0.0,
+    "final_s": 877.8746468837934,
+    "gate_ms_p95": 21.97,
+    "wall_seconds": 22.92,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 2.7204703125725858,
+        "v": 6.811475179171914,
+        "length": 3.4421581452780083,
+        "width": 2.0933718460101254,
+        "id": 1
+      },
+      {
+        "s": 29.002675243173254,
+        "v": 3.2372049246454253,
+        "length": 6.496949887069027,
+        "width": 1.746578342322239,
+        "id": 2
+      },
+      {
+        "s": 63.66332527399373,
+        "v": 4.295668813861983,
+        "length": 4.5859635089835,
+        "width": 1.9464878857224244,
+        "id": 3
+      },
+      {
+        "s": 86.24812618660485,
+        "v": 6.152606368164858,
+        "length": 3.313479682042064,
+        "width": 1.7639280716427939,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.529986959336271,
+      "brake_gain": 5.900151191504797,
+      "drag": 0.07630655451843829,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 9,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 57.3,
+    "max_path_error": 0.233,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 198,
+      "lead_following_approach": 2,
+      "wait": 6,
+      "waiting_for_safe_gap": 85,
+      "commit": 144,
+      "lead_following": 62,
+      "follow": 76,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 2.2063419522354404,
+    "final_s": 932.7881758543555,
+    "gate_ms_p95": 13.84,
+    "wall_seconds": 3.62,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 5.556088293780258,
+        "v": 3.8665596569752103,
+        "length": 3.4848879438005933,
+        "width": 2.206593294990439,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.509652581121685,
+      "brake_gain": 6.254173120078312,
+      "drag": 0.09593191880127752,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 10,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 47.6,
+    "max_path_error": 0.251,
+    "states": [
+      "APPROACH",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 147,
+      "lead_following_approach": 34,
+      "wait": 5,
+      "waiting_for_safe_gap": 90,
+      "commit": 81,
+      "lead_following": 68,
+      "follow": 51,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "final_speed": 3.2898366287283975,
+    "final_s": 933.0092398781109,
+    "gate_ms_p95": 16.18,
+    "wall_seconds": 3.57,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 6.856831136278962,
+        "v": 4.144445273375573,
+        "length": 5.023319553970646,
+        "width": 1.7442687624976512,
+        "id": 1
+      },
+      {
+        "s": 65.72075906941629,
+        "v": 6.117944362667227,
+        "length": 5.287153868654116,
+        "width": 1.7121606895631738,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.281004039459887,
+      "brake_gain": 5.991659217433139,
+      "drag": 0.069999867067456,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 11,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.03,
+    "states": [
+      "APPROACH",
+      "WAIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 150,
+      "lead_following_approach": 45,
+      "lead_following": 6,
+      "waiting_for_safe_gap": 999
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "final_speed": 0.0,
+    "final_s": 877.4515638082538,
+    "gate_ms_p95": 20.08,
+    "wall_seconds": 20.69,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 5.428554642117824,
+        "v": 4.79886193040248,
+        "length": 6.234737044083053,
+        "width": 1.9259550490698412,
+        "id": 1
+      },
+      {
+        "s": 43.40136464549955,
+        "v": 4.936924144249485,
+        "length": 3.6463112034920684,
+        "width": 1.9583360473292637,
+        "id": 2
+      },
+      {
+        "s": 82.17313138010621,
+        "v": 5.964884362599763,
+        "length": 3.3294320968022646,
+        "width": 1.8123808838371678,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.636005806237759,
+      "brake_gain": 6.714466801550766,
+      "drag": 0.08773753930164957,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 12,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.03,
+    "states": [
+      "APPROACH",
+      "WAIT"
+    ],
+    "reasons": {
+      "approach_to_yield": 107,
+      "lead_following_approach": 80,
+      "wait": 6,
+      "waiting_for_safe_gap": 1007
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "final_speed": 0.0,
+    "final_s": 877.7834213814446,
+    "gate_ms_p95": 22.95,
+    "wall_seconds": 23.08,
+    "approach_stop_commands": 0,
+    "moving_emergency_commands": 0,
+    "start_index": 1730,
+    "merge_speed": 3.0,
+    "traffic": [
+      {
+        "s": 5.694848144262577,
+        "v": 5.2873625132862765,
+        "length": 5.332436648936934,
+        "width": 1.6998202470477575,
+        "id": 1
+      },
+      {
+        "s": 28.110777343645037,
+        "v": 3.873772460316822,
+        "length": 3.95916848817416,
+        "width": 2.1672436365645584,
+        "id": 2
+      },
+      {
+        "s": 64.24801588959266,
+        "v": 5.0072851936386655,
+        "length": 4.953665167136718,
+        "width": 2.0629247601104006,
+        "id": 3
+      },
+      {
+        "s": 85.6849896162139,
+        "v": 4.200273959623849,
+        "length": 3.56793562836111,
+        "width": 2.2341810870705254,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.588236491116299,
+      "brake_gain": 6.728230191763121,
+      "drag": 0.0629843853454351,
+      "latency": 0.1
+    }
+  }
+]

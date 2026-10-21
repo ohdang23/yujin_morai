@@ -1,0 +1,20 @@
+<launch>
+  <arg name="mission_config" />
+  <arg name="enable_control" default="false" />
+  <arg name="evaluation_mode" default="false" />
+  <arg name="run_driver" default="true" />
+  <arg name="command_topic" default="/ctrl_cmd" />
+  <arg name="log_dir" default="$(env HOME)/roundabout_logs" />
+  <!-- Existing old merge gate must NOT run with this node name. -->
+  <node pkg="roundabout_mission" type="roundabout_merge_gate.py" name="roundabout_merge_gate" output="screen" required="true" clear_params="true">
+    <rosparam command="load" file="$(arg mission_config)" />
+    <param name="evaluation_mode" value="$(arg evaluation_mode)" />
+    <param name="log_dir" value="$(arg log_dir)" />
+  </node>
+  <node if="$(arg run_driver)" pkg="roundabout_mission" type="roundabout_test_driver.py" name="roundabout_test_driver" output="screen" required="true" clear_params="true">
+    <rosparam command="load" file="$(arg mission_config)" />
+    <param name="enable_control" value="$(arg enable_control)" />
+    <param name="command_topic" value="$(arg command_topic)" />
+    <param name="log_dir" value="$(arg log_dir)" />
+  </node>
+</launch>

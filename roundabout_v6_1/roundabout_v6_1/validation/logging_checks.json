@@ -1,0 +1,15 @@
+{
+  "version": "6.1.0",
+  "status": "pass",
+  "checks_count": 7,
+  "checks": [
+    "paired CSV/JSONL preserve commands, nested fields, clocks and V6.1 diagnostics",
+    "disabled file logging remains supported",
+    "baseline recorder preserves supplied driving parameters and rejects other profiles",
+    "core, gate, actual driver and driving YAML hashes are unchanged by logging",
+    "running-master trial starts recording first, saves final brake, snapshots and complete archive",
+    "absent-master trial starts roscore and shuts it down after the final bag",
+    "recorder failure stops driving, marks incomplete recording and still creates diagnostic archive"
+  ],
+  "runtime_limitations": "ROS transport/processes/bag reading were mocked; ROS Noetic/MORAI were not run."
+}

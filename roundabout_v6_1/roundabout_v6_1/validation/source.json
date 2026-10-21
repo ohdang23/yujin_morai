@@ -1,0 +1,19 @@
+{
+  "source_archive": "roundabout_mission_v5_current.tar(2).gz",
+  "source_sha256": "c7fb92d8bbd5d029c807535aba7fa9c0cff37d01165bd4a031aaef4ae97027a6",
+  "source_code_version": "5.0.0",
+  "version": "6.1.0",
+  "original_yaml_sha256": "40c83ed9b1a523f4c75e43cd79dd87713b590d3fabbcd464ca40af1d71b24019",
+  "base_gap_m": 1.0,
+  "time_headway_s": 1.5,
+  "note": "Original V5 baseline, without V5.2 scheduled/V5.3/V5.4 observation advance.",
+  "stationary_obstacle_gap_m": 5.0,
+  "route_instantiation": {
+    "status": "pass",
+    "ego_points": 4430,
+    "circulating_points": 226,
+    "entry_decision_stop_index": 1792,
+    "entry_decision_stop_s": 881.502366094983
+  },
+  "logging_revision": "Full rosbag, paired CSV/JSONL, parameters, sources, routes, summary and automatic archive; driving code/configuration unchanged."
+}

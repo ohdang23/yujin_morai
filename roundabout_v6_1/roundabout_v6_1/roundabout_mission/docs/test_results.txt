@@ -1,0 +1,129 @@
+Roundabout mission v4.2.0 — offline verification, 2026-10-04
+
+Reported runtime evidence: fresh odometry/LiDAR, one /ctrl_cmd publisher,
+TTC=null, lost IDs 1430/1451, predicted collision in 5.2s with ID585,
+state=WAIT, reason=track_loss_waiting_current_gap, emergency=true, brake=1.
+Confirmed defect: v4.1's missing-ID branch forced a global emergency stop;
+recovery needed a continuously empty gap before the normal gap confirmation.
+The supplied record does not include ID585's box/velocity, so its actual
+classification or the correctness of that prediction cannot be established.
+
+PASS: unittest discovery, 99 tests (includes inherited adapter cases).
+Regressions cover stable approach under alternating blocked/clear traffic,
+moving-ID loss before yield without full brake, current traffic not preventing
+scene reconfirmation, no release on repeated/timer-only sensor samples,
+freshness watchdog and stationary hazards retained, accelerated launch through
+the actual driver, fastest safe candidate selection, slower fallback when a
+fast candidate catches a lead, bounded speed cap, curved ID handoff, stationary
+Kalman velocity residuals retained as static geometry rather than long drift.
+
+PASS: original CSV full-route synthetic plant with actual driver and command
+latency, empty traffic: exit after 545.8 simulated seconds, maximum projected
+path error 0.253m. CRUISE -> APPROACH -> WAIT -> COMMIT -> FOLLOW -> EXIT.
+No approach stop commands or moving emergency commands.
+Raw result: full_route_v42.json.
+
+PASS with limits: 12 synthetic moving-traffic scenarios, seeds 1..12,
+1..4 vehicles, randomized constant speed 2..7m/s and dimensions, 0.1s latency,
+ID turnover, bounded detection drops. Production candidates 4 / 3.5 / 3m/s.
+9 scenarios reached EXIT, 3 remained WAIT at 120s; zero ego collisions under
+the independent true-polygon check; zero stop commands during APPROACH.
+NPC/NPC interaction is not simulated. All NPCs are in the tracked field of
+view. Occlusion and the actual MORAI plant are not validated by this benchmark.
+Raw result: traffic_benchmark_v42.json.
+
+PASS: v4.1 YAML migration to v4.2, preserving original path and mission indices.
+PASS: Python syntax, launch/package XML, shell syntax, whitespace checks.
+No live ROS Noetic build or Windows MORAI execution is available here.
+
+Missing moving-track retirement is a simulator perception policy requiring
+>=2s and >=10 distinct fresh frames; it runs independently of the traffic gap.
+It is not visibility/free-space proof. Entry still requires current geometry
+checks and normal 0.8s confirmation. Stationary in-path loss and critical loss
+inside the conflict still need reacquisition. Geometry/vehicle offset and
+sensor coverage must be checked in the user's simulator.
+
+Previous v4.1 verification record follows:
+
+Roundabout mission v4.1.0 — offline verification, 2026-10-04
+
+User observation: stopped before entry near (-99.17146,315.91374).
+V4 stop reason: relevant_track_lost_restart_or_reacquire; 31 lost IDs.
+Uploaded snapshot: 3 map-object frames spanning 0.031653166 seconds, 20 IDs
+per frame, same IDs in all three. This snapshot DOES NOT demonstrate ID churn.
+ID 534 speed magnitude: about 5.24 m/s. Clusters are not semantic car labels.
+
+PASS: unittest discovery (86 cases, includes inherited cases).
+New regressions cover one-to-one ID handoff; ambiguous matches; real blockers
+remaining under a new ID; fresh-frame recovery after stopping before conflict;
+no timer-only or duplicate-frame recovery; stale LiDAR resets confirmation;
+stationary lost in-path objects remain stops; inside-conflict loss remains a
+stop until reacquisition; previously authorized pre-conflict stop recovery;
+and 31 synthetic old moving IDs no longer latching after clear-scene confirmation.
+
+PASS: original-route evaluation of all 3 uploaded object frames at the reported
+stopped position with assumed north heading and 31 synthetic lost moving IDs.
+Current object 534 continues to block; output track_loss_waiting_current_gap.
+These synthetic lost records are not the unrecorded history of the real IDs.
+
+PASS: uploaded moving-object geometry re-evaluation. Object 772 is a confirmed
+circulating track (about 4.5 m/s). With the old 2 m/s merge limit it remains a
+predicted occupancy; with the v4.1 minimum 3 m/s merge setting its predicted
+footprints clear the ego entry/exit window and the gate transitions to COMMIT
+after the normal 0.8 s confirmation. The driver now follows the gate's
+`target_speed` instead of replacing it with a fixed active speed limit.
+
+PASS: original full CSV empty-scene kinematic replay, 5900 steps, dt=0.1 s,
+590 simulated seconds, maximum projected path error 0.220 m.
+States: CRUISE -> APPROACH -> READY -> COMMIT -> FOLLOW -> EXIT.
+
+PASS: Python syntax, XML parse, shell syntax, git diff whitespace checks.
+No live ROS/Noetic build or Windows MORAI run is available in this workspace.
+No actual random-traffic merge success is claimed.
+
+Limits: reidentification uses geometric/velocity gates, not semantic identity.
+Fresh track lists are not proof of visibility or unoccupied free space. Recovery
+before conflict is a simulator testing policy, requiring standstill and a current
+safe scene over >=2 seconds and >=10 distinct evaluated new frames, then the
+normal safe-gap debounce. No blind timer release. Occlusion and dynamic behavior
+outside the tracked field of view need live validation and richer visibility data.
+
+Previous v4 verification record follows for provenance:
+
+Roundabout mission v4.0.0 — offline verification, 2026-10-01
+
+Scope: checked-out ROI code plus test/rrt 1583f156523fe25981a13f311cb6a41cb61382fa compatibility; no connection to the user's ROS master,
+Docker container or Windows MORAI simulator. No live UDP commands sent.
+
+Unit/regression suite: PASS (unittest discovery: 64 cases including inherited cases).
+Includes: duplicate/out-of-order timestamps keep last valid sample without
+extending freshness; inactive mission allows CSV cruise; active mission stops
+on missing LiDAR; user's roadside fragment geometry; rotated long vehicle;
+crossing TTC; stationary in-path obstacle; speed cap composition; stale status;
+lead following; gap acceptance beyond the nominal prediction horizon during
+slow merges; stationary conflict occupancy; command mode and pedal behavior.
+
+Closed-loop kinematic replay of original 2026_molit_comp_global_path.txt:
+PASS start -> roundabout -> exit, 5900 steps, dt=0.1 s,
+590.0 simulated seconds, maximum projected path error 0.220 m.
+States: CRUISE, APPROACH, READY, COMMIT, FOLLOW, EXIT.
+Uses the repository Pure Pursuit/PedalSpeedController and mission core,
+empty obstacle stream and a simplified synthetic longitudinal/bicycle plant.
+This does not validate actual sensor latency, MORAI dynamics or moving traffic.
+
+Derived map fixture conflict: ego indices 1808..1860; circulating 30..82.
+Original approach/stop/entry/merge/exit indices retained. Existing path unchanged.
+Conflict geometry and vehicle dimensions require live simulator verification.
+
+Static verification: Python compilation, launch/package XML parsing,
+shell syntax, git diff whitespace checks: PASS.
+Existing UDP encoder inspection: ctrl_mode=2, gear=4, cmd_type=1.
+Position input: GPS/IMU EKF; other vehicles: LiDAR tracked objects.
+No NPC ground truth or traffic-light network in standalone launch.
+
+Required next validation: install/version/source verification in user's Noetic
+container; empty-route MORAI run; circulating-vehicle WAIT/merge/follow tests.
+
+Branch comparison: test/rrt sensor, UDP, EKF, pedal controller and ego path
+match the audited base. Pure Pursuit adds an optional lookahead argument;
+its test/rrt version was used for the final 64-case suite and route replay.

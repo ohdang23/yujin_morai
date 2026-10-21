@@ -1,0 +1,1037 @@
+--- v42/CMakeLists.txt
++++ v5/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ cmake_minimum_required(VERSION 3.0.2)
+ project(roundabout_mission)
+-find_package(catkin REQUIRED COMPONENTS rospy std_msgs nav_msgs morai_msgs lidar_perception purepursuit_mgeo path_planning)
++find_package(catkin REQUIRED COMPONENTS visualization_msgs geometry_msgs rospy std_msgs nav_msgs morai_msgs lidar_perception purepursuit_mgeo path_planning)
+ catkin_python_setup()
+ catkin_package()
+-catkin_install_python(PROGRAMS scripts/roundabout_merge_gate.py scripts/roundabout_test_driver.py scripts/make_roundabout_config.py scripts/prepare_roundabout_v4.py scripts/roundabout_diagnose.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+-install(DIRECTORY launch config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
++catkin_install_python(PROGRAMS scripts/roundabout_merge_gate.py scripts/roundabout_test_driver.py scripts/make_roundabout_config.py scripts/prepare_roundabout_v4.py scripts/prepare_roundabout_v5.py scripts/roundabout_diagnose.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
++install(DIRECTORY launch config docs DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+--- v42/README.md
++++ v5/README.md
+@@ -1,3 +1,7 @@
++# v5 ID-independent entry decision
++
++현재 설치/실행/변경/검증 결과는 [docs/V5_ID_INDEPENDENT_ENTRY_DECISION.md](docs/V5_ID_INDEPENDENT_ENTRY_DECISION.md)를 먼저 읽으세요. 아래 내용과 기존 install_v42는 과거 참고 자료입니다.
++
+ # 회전교차로 미션 v4.2 (2026-10-04)
+ 
+ 현재 설치·실행·동작 설명은 [docs/RUN_V42.md](docs/RUN_V42.md)를 따른다.
+--- v42/config/roundabout.yaml
++++ v5/config/roundabout.yaml
+@@ -79,3 +79,7 @@
+ reid_distance_m: 3.0
+ reid_velocity_delta_mps: 3.0
+ critical_track_horizon_s: 3.0
++# v5: bounded anonymous observation memory, independent of raw tracker IDs.
++entry_occlusion_hold_s: 0.8
++entry_vehicle_length_m: 4.5
++entry_vehicle_width_m: 1.8
+--- v42/docs/V5_ID_INDEPENDENT_ENTRY_DECISION.md
++++ v5/docs/V5_ID_INDEPENDENT_ENTRY_DECISION.md
+@@ -0,0 +1,166 @@
++# v5.0.0 — ID-independent entry decision
++
++기준: 사용자가 첨부한 `roundabout_mission_v42_final_modified(2).zip`.
++원본 ZIP은 수정하지 않았으며 SHA-256은 validation_v5/static_checks.json에 기록했다.
++이 결과는 MORAI 실차량 동작을 검증한 릴리스가 아니라, 로컬 단위 검증을 마친 MORAI 시험용 패키지다.
++
++## 문제와 변경 범위
++가림막 뒤에서 bbox/centroid/velocity/ID가 흔들리는데 v4.2는 lost/re-ID 복구와 gap 판단이 결합되어 있었다.
++v5는 raw ID를 제어 조건으로 사용하지 않는다. ID는 상태 출력에만 남긴다.
++core.py의 복구·handoff·lost-ID 대기를 제거하고 entry_decision.py로 입력 이력과 conflict 평가를 분리했다.
++이전 YAML의 reid_*, lost_recheck_* 값은 호환을 위해 남아 있지만 판단에는 사용하지 않는다.
++외부 tracker, Pure Pursuit, PID, accel/brake 생성기, 경로 파일은 교체하지 않는다.
++
++## 새 흐름
++1. 새로운 sensor timestamp의 관측만 수용한다.
++2. 최근 0.8초의 위치/속도 관측을 순환 경로에 따라 전파한다. ID를 key로 저장하지 않는다.
++3. 거의 동일한 공간·속도·크기 가설만 중복 제거한다. 서로 다른 split 조각은 보수적으로 남긴다.
++4. ROI, 순환 경로와의 횡거리, 속도 >= min_vehicle_speed, 진행방향 cosine 조건으로 후보를 고른다.
++5. 차량의 앞/뒤 footprint가 conflict에 들어오고 나가는 시간 구간을 계산한다.
++6. ego의 앞 진입부터 뒤 이탈까지의 시간과 비교한다. 앞 buffer 0.8초, 뒤 buffer 1.2초를 적용한다.
++7. 기존 sampled footprint collision predictor도 독립적으로 적용한다. 진입 전은 conflict clearance까지,
++   COMMIT 후에는 기존처럼 exit까지 예측한다. 이 검사는 순환 후보가 아닌 이동 물체도 포함한다.
++8. 위험이 없고 서로 다른 센서 frame에서 0.3초가 확인되면 COMMIT한다. timer tick만으로 확정하지 않는다.
++
++차량이 먼저 통과: object_out + front_buffer < ego_in.
++ego가 먼저 통과: ego_out + rear_buffer < object_in.
++위 둘 중 하나가 성립하지 않거나 물리 궤적 충돌이 예측되면 위험이다.
++단순 ID 변화, ID 개수 증가, ID 소실 자체는 SAFE timer reset 조건이 아니다.
++짧은 미검출 중에는 이전 관측에서 전파된 위험이 여전히 timer를 막는다.
++
++## COMMIT과 안전
++COMMIT은 mission exit까지 latch된다. 일반 gap blocker가 나타나도 WAIT로 돌아가지 않는다.
++TTC, 선행차 최소거리, 실제 footprint collision, odometry/LiDAR watchdog, off-path 검사는 계속 작동한다.
++비상 시 state=COMMIT을 유지하면서 stop_required=true, emergency=true, target_speed=0을 출력한다.
++기존 driver가 emergency를 받으면 accel=0, brake=1로 처리한다.
++정지 구조물은 circulating vehicle 후보가 아니다. 다만 실제 ego 경로를 막는 정지 footprint는 별도 위험이다.
++이 정지 장애물은 빈 detection 메시지로 제거하지 않는다. 앞으로의 정지거리 cap도 적용했다.
++이는 원본의 정지 선행물체 누락을 보완한 유일한 추가 제동 동작이다. PID/페달 계산식은 변경하지 않았다.
++정지 장애물 오검출이 경로에 남으면 정지할 수 있으므로 현장 확인 후 mission을 재시작해야 한다.
++
++## 유지된 설정과 새 설정
++원본 config의 모든 기존 key/value를 비교하여 동일함을 확인했다.
++- merge_speed / roundabout_speed / maximum_merge_speed / test_speed_limit: 5.0 m/s
++- max_accel: 2.5, speed_kp: 0.30, max_accel_pedal: 1.0, max_accel_rate: 3.0
++- front_time_buffer_s: 0.8, rear_time_buffer_s: 1.2, safe_confirm_s: 0.3
++
++추가된 값:
++- entry_occlusion_hold_s: 0.8 (초). 기존 track_hold_s=0.4는 보존하지만 v5 관측 이력은 새 값을 사용한다.
++- entry_vehicle_length_m: 4.5, entry_vehicle_width_m: 1.8 (m).
++  순환 차량 후보의 작은 bbox를 이 크기 이상으로 판단한다. 큰 bbox는 줄이지 않는다.
++  정지 가림막이나 순환 조건을 만족하지 않는 잡음에는 이 확대를 적용하지 않는다.
++
++주의: 0.8초는 현장 가림 시간을 계측해 확정한 값이 아니다. 그보다 긴 개별 차량 미검출은 보장하지 못한다.
++이력을 늘리면 보수적 대기와 연산량도 증가한다. safe_confirm_s를 줄여 이를 해결하지 말 것.
++
++## 수정 파일
++- src/roundabout_mission/core.py: 진입 판단 연결, ID recovery 제거, latch/status, 정지 장애물 제동
++- src/roundabout_mission/entry_decision.py: 새 관측 이력/후보/ETA/충돌 평가
++- src/roundabout_mission/visualization.py: RViz gap MarkerArray
++- src/roundabout_mission/ros_io.py: CSV 진단 필드
++- src/roundabout_mission/__init__.py, package.xml: 5.0.0 및 marker 의존성
++- scripts/roundabout_merge_gate.py: marker publisher
++- scripts/prepare_roundabout_v5.py, scripts/install_v5.sh: 기존 설정을 보존하는 설치 경로
++- config/roundabout.yaml: 새 파라미터 3개만 추가
++- CMakeLists.txt: 새 스크립트/의존성/문서 설치
++- test/test_v5_entry.py, test/test_v5_visualization.py: 새 테스트
++- README.md 및 docs: 실행/검증 기록
++
++scripts/roundabout_test_driver.py, prediction.py, integration.py, 기존 두 launch는 byte-identical이다.
++전체 diff는 validation_v5/source.diff에 있다. 과거 docs의 benchmark 수치는 v5 결과가 아니다.
++
++## 설치 및 실행 — 기존 ROS Noetic 컨테이너
++실행 중인 주행 launch를 종료한 뒤, 기존 패키지를 workspace 밖으로 백업한다.
++중복 패키지를 src 내부에 backup 이름으로 남기면 catkin이 중복 package를 찾을 수 있다.
++
++```bash
++cd /root/morai_ws/src/ROI/src/control
++mv roundabout_mission /root/roundabout_mission_v42_backup_$(date +%Y%m%d_%H%M%S)
++# 받은 ZIP의 실제 경로를 지정한다.
++unzip /root/roundabout_mission_v5_id_independent.zip -d /root/morai_ws/src/ROI/src/control
++bash roundabout_mission/scripts/install_v5.sh /root/roundabout_mission_v42.yaml /root/roundabout_mission_v5.yaml
++source /root/morai_ws/devel/setup.bash
++```
++
++기존 YAML 이름이 다르면 첫 인자를 실제 파일로 바꾼다. 새 출력 YAML이 이미 있으면 다른 이름을 지정한다.
++install_v5는 경로나 인덱스/속도를 재계산하지 않는다. install_v42.sh / prepare_roundabout_v4.py는 과거용이므로 사용하지 않는다.
++첨부 ZIP에는 실제 CSV와 runtime mission YAML이 없다. 기본 config/roundabout.yaml의 -1 인덱스로 실행하면
++의도적으로 오류가 난다. 기존에 잘 주행했던 실제 YAML과 경로가 반드시 필요하다.
++
++```bash
++roslaunch roundabout_mission roundabout_standalone.launch \
++  mission_config:=/root/roundabout_mission_v5.yaml \
++  morai_host_ip:=192.168.0.10 enable_control:=false rviz:=true
++```
++
++위 IP는 예시이므로 실제 MORAI Windows IP로 바꾼다. 기존 port/extrinsic 인자가 있었다면 동일하게 붙인다.
++입력과 marker를 확인한 다음 같은 명령의 enable_control:=true로 주행한다.
++기존 다른 CtrlCmd publisher와 동시에 실행하지 않는다.
++
++## RViz
++Fixed Frame = 기존 map_frame (기본 map).
++Add → By topic → /roundabout_merge_gate/gap_markers → MarkerArray.
++기존 LiDAR RViz 설정은 수정하지 않았으므로 처음 한 번 직접 추가 후 저장한다.
++- 초록: COMMIT/FOLLOW가 허가되고 stop/emergency가 아닌 ego 진입 통로
++- 노랑: 위험은 없지만 SAFE 확인 중
++- 빨강: 위험이 검출되었거나 비상제동 중
++- 텍스트: state, reason, 위험 가설 수, SAFE 경과시간
++- inactive이면 삭제하고 publisher가 멈추면 marker는 0.5초 뒤 사라진다.
++
++표시 선은 정지선~conflict_end의 ego CSV 경로다. NPC 사이의 실제 측정된 빈 공간이나
++가림막 뒤 free-space 지도를 뜻하지 않는다. COMMIT latch 중 장기 예측 위험이 생겨도
++즉시 제동 조건이 아니면 허가 통로는 초록으로 유지될 수 있다. 숫자/텍스트와 함께 본다.
++
++## 2026-10-06 MORAI 확인
++```bash
++rostopic echo /roundabout_merge_gate/status
++rostopic echo /roundabout_merge_gate/stop_required
++rostopic echo /roundabout_merge_gate/target_speed
++rostopic hz /perception/lidar/tracked_obstacles_map
++rosbag record -O /root/v5_entry_test.bag \
++  /perception/lidar/tracked_obstacles_map /localization/odometry \
++  /roundabout_merge_gate/status /roundabout_merge_gate/gap_markers \
++  /roundabout_merge_gate/stop_required /roundabout_merge_gate/target_speed /ctrl_cmd
++```
++
++중점 status: dangerous_vehicle_count, conflict_candidate_count, minimum_conflict_eta,
++ego_conflict_eta, minimum_time_gap, safe_duration, commit_latched, emergency_active,
++decision_reason, decision_compute_ms. null ETA는 해당 후보 없음/해당 구간 평가 안 함을 뜻한다.
++count는 보수적 관측/충돌 가설 수이며 실제 차량 대수와 같지 않을 수 있다. ID별 차량 수가 아니다.
++minimum_time_gap은 시간구간 사이의 signed gap이며 음수면 겹침이다. footprint predictor가
++추가로 위험을 검출할 수 있으므로 시간 gap 하나만 보고 permission을 해석하면 안 된다.
++
++성공: 위험차 접근 시 WAIT; ID 54→71/split에도 위험 유지; 통과 후 SAFE 0.3초 확인;
++COMMIT 후 일반 ID 변동으로 WAIT 복귀 없음; 실제 근접 충돌은 emergency 제동;
++CSV 추종/내부 속도/탈출은 기존과 동일.
++실패: 위험 접근 중 녹색 허가, 진입 충돌, 상시 false blocker, ID 변화만으로 대기,
++센서 stale 또는 계산지연으로 반복 제동, marker와 status의 불일치.
++
++## 검증과 한계
++새 16개 테스트는 요청 CASE 1~8 및 ID 순열 불변성, harmless ID 교체,
++신규 frame 확인, watchdog/latch, 정지 장애물 유지, RViz 색/삭제를 포함하고 통과했다.
++ROS transport는 실제 통신이 아닌 double을 사용했다. ROS Noetic catkin 빌드/MORAI/RViz GUI는
++이 환경에 없어서 실행 검증하지 못했다. Python 3.8 문법, Python 실행 테스트, XML/YAML 파싱은 통과했다.
++
++원본 테스트는 수정하지 않고 두 버전에서 실행했다. v4.2도 99개 중 14개가 실패한다.
++v5에는 이미 폐기한 lost/cache/handoff 내부를 직접 조작하는 테스트 및 COMMIT 취소를 기대하는
++테스트가 있어 전체 과거 suite는 통과하지 않는다. 모든 실패를 validation_v5에 원문과 분류표로 남겼다.
++새 테스트 통과를 전체 과거 suite 통과라고 해석하면 안 된다.
++테스트 의존 코드와 맵은 로컬의 별도 ROI checkout을 읽기만 했고 이 ZIP에 복사/수정하지 않았다.
++기존 traffic_benchmark의 ROOT가 설치 위치에 의존하므로 비교 실행에서는 ROOT만 해당 checkout으로 지정했다.
++
++성능: 합성 32-object ID churn에서는 median 약 39ms, max 약 45ms.
++0.8초 동안 위치/속도 잡음을 추가한 32개 객체에서는 454개의 가설로 약 359ms가 걸렸다.
++이를 이유로 안전 가설을 임의 삭제하거나 watchdog 시간을 완화하지 않았다. 실제 PC의 decision_compute_ms를
++반드시 확인한다. 20Hz 목표는 50ms 이하이며 300ms 이상은 기존 decision watchdog과 충돌한다.
++이런 부하가 실제 발생하면 history 축약/예측 벡터화의 추가 개발이 필요하다.
++
++완전히 가려져 관측된 적 없는 차량, 0.8초를 초과하는 가림, 큰 속도 오차, 잘못된 좌표계/경로,
++차량 크기/odom 기준점 오류는 이 변경만으로 해결되지 않는다. 이력 크기 확대는 오대기 가능성이 있다.
++새 로직은 추적 ID의 정확한 복원을 보장하는 tracker가 아니다.
++
++로컬 기본 회귀 실행:
++```bash
++cd /root/morai_ws/src/ROI/src/control/roundabout_mission
++PYTHONPATH=src:$PYTHONPATH python3 -m unittest discover -s test -p 'test_v5_*.py' -v
++```
+--- v42/package.xml
++++ v5/package.xml
+@@ -1,10 +1,10 @@
+ <?xml version="1.0"?>
+ <package format="2">
+-  <name>roundabout_mission</name><version>4.2.0</version>
++  <name>roundabout_mission</name><version>5.0.0</version>
+   <description>Independent roundabout gap acceptance and lead following for MORAI.</description>
+   <maintainer email="team@example.com">ROI Team</maintainer><license>MIT</license>
+   <buildtool_depend>catkin</buildtool_depend>
+-  <depend>rospy</depend><depend>std_msgs</depend><depend>nav_msgs</depend>
++  <depend>rospy</depend><depend>visualization_msgs</depend><depend>geometry_msgs</depend><depend>std_msgs</depend><depend>nav_msgs</depend>
+   <depend>morai_msgs</depend><depend>lidar_perception</depend>
+   <depend>purepursuit_mgeo</depend><depend>path_planning</depend>
+   <exec_depend>python3-yaml</exec_depend><exec_depend>python3-numpy</exec_depend><exec_depend>tf</exec_depend><exec_depend>python3-rospkg</exec_depend><exec_depend>rosgraph</exec_depend>
+--- v42/scripts/install_v5.sh
++++ v5/scripts/install_v5.sh
+@@ -0,0 +1,17 @@
++#!/usr/bin/env bash
++# Run after replacing the package with the extracted v5 directory.
++set -eo pipefail
++ORIGINAL_CONFIG="${1:?Pass the working v4.2 mission YAML as argument 1}"
++OUTPUT_CONFIG="${2:-/root/roundabout_mission_v5.yaml}"
++test -f "$ORIGINAL_CONFIG"
++if [ -e "$OUTPUT_CONFIG" ]; then
++  echo "Output already exists; choose a new filename: $OUTPUT_CONFIG" >&2
++  exit 1
++fi
++source /opt/ros/noetic/setup.bash
++cd /root/morai_ws
++catkin_make --pkg roundabout_mission
++source devel/setup.bash
++python3 -c 'from roundabout_mission import VERSION; assert VERSION == "5.0.0", VERSION'
++rosrun roundabout_mission prepare_roundabout_v5.py --existing "$ORIGINAL_CONFIG" --output "$OUTPUT_CONFIG"
++printf 'v5 config: %s\n' "$OUTPUT_CONFIG"
+--- v42/scripts/prepare_roundabout_v5.py
++++ v5/scripts/prepare_roundabout_v5.py
+@@ -0,0 +1,23 @@
++#!/usr/bin/env python3
++"""Copy a working v4.2 mission config without recomputing routes or tuning."""
++import argparse
++from pathlib import Path
++import yaml
++from purepursuit_mgeo.path import load_mgeo_path
++from roundabout_mission.core import Decision
++
++def prepare(existing, output):
++    old=yaml.safe_load(Path(existing).read_text())
++    cfg=dict(old)
++    for key,value in dict(entry_occlusion_hold_s=.8,entry_vehicle_length_m=4.5,entry_vehicle_width_m=1.8).items():
++        cfg.setdefault(key,value)
++    Decision(load_mgeo_path(cfg['path_file']),load_mgeo_path(cfg['circulating_path_file']),cfg)
++    with open(output,'x') as stream:yaml.safe_dump(cfg,stream,sort_keys=False)
++    print('Created',output,'; existing route, mission geometry and tuning preserved.')
++    for key in cfg:
++        if key not in old:print('Added',key,cfg[key])
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--existing',required=True);p.add_argument('--output',required=True)
++    args=p.parse_args();prepare(args.existing,args.output)
+--- v42/scripts/roundabout_merge_gate.py
++++ v5/scripts/roundabout_merge_gate.py
+@@ -27,6 +27,8 @@
+         self.stop = rospy.Publisher('~stop_required', Bool, queue_size=1)
+         self.speed = rospy.Publisher('~target_speed', Float64, queue_size=1)
+         self.allowed = rospy.Publisher('~allowed', Bool, queue_size=1)
++        from visualization_msgs.msg import MarkerArray
++        self.gap_markers = rospy.Publisher('~gap_markers', MarkerArray, queue_size=1)
+         self.status = rospy.Publisher('~status', String, queue_size=1)
+         rospy.Subscriber(cfg.get('odom_topic','/localization/odometry'),Odometry,self.odom,queue_size=1)
+         rospy.Subscriber(cfg.get('obstacle_topic','/perception/lidar/tracked_obstacles_map'),LidarObstacleArray,self.obstacles,queue_size=1)
+@@ -80,6 +82,8 @@
+             self.speed.publish(Float64(data=row['target_speed']))
+             self.allowed.publish(Bool(data=row['allowed']))
+             self.status.publish(String(data=json.dumps(row,allow_nan=False)))
++            from roundabout_mission.visualization import markers
++            self.gap_markers.publish(markers(self.engine,row,self.frame,rospy.Time.now()))
+             self.log.write(row)
+ 
+ 
+--- v42/src/roundabout_mission/__init__.py
++++ v5/src/roundabout_mission/__init__.py
+@@ -1 +1 @@
+-VERSION = "4.2.0"
++VERSION = '5.0.0'
+--- v42/src/roundabout_mission/core.py
++++ v5/src/roundabout_mission/core.py
+@@ -7,6 +7,7 @@
+ from dataclasses import dataclass
+ import numpy as np
+ from .prediction import MergePredictor
++from .entry_decision import ObservationWindow, ConflictEvaluator
+ 
+ 
+ @dataclass
+@@ -141,23 +142,14 @@
+         self.clear_since = None
+         self.last_time = None
+         self.target = 0.
+-        self.cache = {}
+-        self.lost = {}
+-        self.previous_relevant = set()
++        self.static_hazards = []
+         self.frame_serial = 0
+         self.frame_stamp = None
+-        self.id_handoffs = []
+         self.safe_frames = 0
+         self.safe_serial = -1
+         self.yield_hold = False
+         self.merge_target = cfg['merge_speed']
+-        self._reset_recovery()
+-        for name, default in [('lost_recheck_s',2.0), ('reid_max_age_s',1.5),
+-                              ('reid_distance_m',1.5), ('reid_velocity_delta_mps',2.0)]:
+-            if not math.isfinite(cfg.get(name, default)) or cfg.get(name, default) <= 0:
+-                raise ValueError(name+' must be finite and positive')
+-        if type(cfg.get('lost_recheck_frames',10)) is not int or cfg.get('lost_recheck_frames',10) < 2:
+-            raise ValueError('lost_recheck_frames must be an integer >= 2')
++        self.observations = ObservationWindow(cfg)
+         self.predictor = MergePredictor(self.path,self.circulating,cfg)
+         self.use_prediction = cfg.get('trajectory_prediction_enabled',True)
+         self.merge_ceiling = min(cfg.get('maximum_merge_speed',cfg['merge_speed']),
+@@ -166,136 +158,18 @@
+             raise ValueError('merge candidate ceiling must be finite and >= merge_speed')
+         if self.use_prediction:
+             self.merge_target = self.merge_ceiling
+-
+-    def _reset_recovery(self):
+-        self.recheck_first_stamp = None
+-        self.recheck_serial = -1
+-        self.recheck_frames = 0
+-
+-    def _same_object_candidate(self, old, stamp, new, now):
+-        age = now-stamp
+-        if not 0 <= age <= self.c.get('reid_max_age_s',1.5):
+-            return False
+-        px,py,_,vx,vy=self.predictor.propagate(old,age) if self.use_prediction else (old.x+old.vx*age,old.y+old.vy*age,old.yaw,old.vx,old.vy)
+-        distance = math.hypot(new.x-px, new.y-py)
+-        if distance > self.c.get('reid_distance_m',1.5):
+-            return False
+-        if math.hypot(new.vx-vx,new.vy-vy) > self.c.get('reid_velocity_delta_mps',2.0):
+-            return False
+-        # Box yaw is pi-ambiguous; compare sorted extents rather than heading.
+-        return all(max(a,b)/max(min(a,b),.02) <= 2.0
+-                   for a,b in zip(sorted((old.length,old.width)), sorted((new.length,new.width))))
++        self.conflicts = ConflictEvaluator(self)
+ 
+     def update_tracks(self, tracks, now):
+-        """Call only for a new validated sensor message, never for timer ticks."""
++        """New source frames only. Raw IDs are diagnostic labels, never keys."""
+         if self.frame_stamp is not None and now <= self.frame_stamp:
+             return
+         self.frame_stamp = now
+         self.frame_serial += 1
+-        self.id_handoffs = []
+-        ids = {t.id for t in tracks}
+-        history = dict(self.cache)
+-        history.update(self.lost)
+-        # Only transfer mutually unique candidates. Ambiguous nearby vehicles
+-        # remain separate hazards, and one observation cannot clear many IDs.
+-        candidates = {}
+-        for new in tracks:
+-            if new.id in history:
+-                continue
+-            matches = [key for key,(old,stamp) in history.items()
+-                       if key not in ids and self._same_object_candidate(old,stamp,new,now)]
+-            candidates[new.id] = matches
+-        uses = {}
+-        for matches in candidates.values():
+-            for key in matches:
+-                uses[key] = uses.get(key,0)+1
+-        for new_id,matches in candidates.items():
+-            if len(matches) == 1 and uses[matches[0]] == 1:
+-                old_id = matches[0]
+-                self.cache.pop(old_id,None)
+-                self.lost.pop(old_id,None)
+-                self.previous_relevant.discard(old_id)
+-                self.id_handoffs.append([old_id,new_id])
+-        for track in tracks:
+-            self.cache[track.id] = (track, now)
+-            self.lost.pop(track.id,None)
++        self.observations.update(tracks, now)
+ 
+     def _tracks(self, now):
+-        held = []
+-        for key, (t, stamp) in list(self.cache.items()):
+-            age = max(0., now-stamp)
+-            if age > self.c['track_hold_s']:
+-                if key in self.previous_relevant:
+-                    self.lost[key] = (t,stamp)
+-                    self._reset_recovery()
+-                del self.cache[key]
+-            else:
+-                # Hold a brief detection gap along the observed motion path.
+-                px,py,yaw,vx,vy=self.predictor.propagate(t,age) if self.use_prediction else (t.x+t.vx*age,t.y+t.vy*age,t.yaw,t.vx,t.vy)
+-                held.append(Track(t.id,px,py,yaw,t.length,t.width,vx,vy))
+-        return held
+-
+-    def _stationary_loss_on_path(self, s):
+-        """A missing parked obstacle in our forward corridor needs reacquisition.
+-
+-        Fresh object lists alone are not free-space evidence for an occluded
+-        stationary obstacle. Do not automatically clear this case.
+-        """
+-        c = self.c
+-        for t,stamp in self.lost.values():
+-            if math.hypot(t.vx,t.vy) >= c['min_vehicle_speed']:
+-                continue
+-            lateral,os,tx,ty = self.path.project(t.x,t.y)
+-            along = projected_radius(t.length,t.width,t.yaw,(tx,ty))
+-            side = projected_radius(t.length,t.width,t.yaw,(-ty,tx))
+-            if (lateral <= c['ego_width']/2+side+c['emergency_margin_m'] and
+-                    os+along >= s-(c['ego_length']-c['ego_front_m']) and
+-                    os-along <= s+c['lead_range_m']):
+-                return True
+-        return False
+-
+-    def _recheck_lost(self, s, result):
+-        """Reconfirm the sensor scene separately from checking a traffic gap.
+-
+-        Moving history before the conflict can be retired after distinct fresh
+-        messages, even while currently visible traffic blocks entry. This never
+-        grants entry: the current geometric gap is checked separately afterward.
+-        Stationary in-path history and loss inside the conflict need reacquisition.
+-        """
+-        c = self.c
+-        before_conflict = s+c['ego_front_m']+c['stop_margin_m'] < self.m['conflict_start']
+-        if not before_conflict:
+-            reason = 'track_loss_inside_conflict_reacquire'
+-        elif self._stationary_loss_on_path(s):
+-            reason = 'lost_stationary_obstacle_on_path'
+-        else:
+-            reason = 'track_loss_scene_confirming'
+-        # Fresh sensor frames can reconfirm the scene both before and inside
+-        # the conflict area. A tracker ID handoff/loss must not latch the vehicle
+-        # at zero speed forever after COMMIT. Current visible traffic is still
+-        # evaluated independently by the live collision/gap checks below.
+-        recoverable = reason in (
+-            'track_loss_scene_confirming',
+-            'track_loss_inside_conflict_reacquire'
+-        )
+-        if recoverable:
+-            if self.frame_stamp is not None and self.frame_serial != self.recheck_serial:
+-                self.recheck_serial = self.frame_serial
+-                if self.recheck_first_stamp is None:
+-                    self.recheck_first_stamp = self.frame_stamp
+-                self.recheck_frames += 1
+-        else:
+-            self._reset_recovery()
+-        span = 0. if self.recheck_first_stamp is None else self.frame_stamp-self.recheck_first_stamp
+-        result.update(recovery_frames=self.recheck_frames, recovery_span_s=span)
+-        if (recoverable and
+-                self.recheck_frames >= c.get('lost_recheck_frames',10) and
+-                span >= c.get('lost_recheck_s',2.0)):
+-            result['recovered_track_ids'] = sorted(self.lost)
+-            self.lost.clear()
+-            self._reset_recovery()
+-            return 'track_loss_scene_reconfirmed'
+-        return reason
++        return self.observations.project(now, self.predictor, Track)
+ 
+     def step(self, ego, now, fresh=True, obstacles_fresh=True):
+         c = self.c
+@@ -313,10 +187,13 @@
+                       lead_vehicle_id=None, lead_x=None, lead_y=None, lead_speed=None,
+                       lead_gap=None, desired_gap=None, relative_speed=None, time_gap=None,
+                       minimum_ttc=None, minimum_distance=None, decision_reason='',
+-                      lost_track_ids=[], recovered_track_ids=[], id_handoffs=self.id_handoffs,
++                      lost_track_ids=[], recovered_track_ids=[], id_handoffs=[],
+                       recovery_frames=0, recovery_span_s=0., track_recovery_reason=None,
+                       decision_phase='CRUISE', gap_check_active=False, safe_frames=0,
+-                      safe_confirm_elapsed_s=0., blocking_track_details=[])
++                      safe_confirm_elapsed_s=0., blocking_track_details=[],
++                      dangerous_vehicle_count=0, conflict_candidate_count=0,
++                      minimum_conflict_eta=None, ego_conflict_eta=None, minimum_time_gap=None,
++                      safe_duration=0., commit_latched=self.entry_was_authorized, emergency_active=False)
+         def finish(reason, target=0., stop=False, emergency=False, launch=False):
+             # A newly accepted launch must request the speed used in its
+             # forecast. Pedal slew is already enforced by the test driver.
+@@ -325,11 +202,22 @@
+             result.update(state=self.state, target_speed=max(0., self.target), stop_required=stop,
+                           emergency=emergency, decision_reason=reason,
+                           allowed=not stop and self.state in ('READY','COMMIT','FOLLOW'))
++            result.update(commit_latched=self.entry_was_authorized, emergency_active=emergency,
++                          safe_duration=result['safe_confirm_elapsed_s'])
++            if emergency:
++                result['decision_reason'] = ('emergency_ttc' if reason == 'emergency_collision_risk' else reason)
++            elif self.state == 'EXIT':
++                result['decision_reason'] = 'exit'
++            elif self.state == 'FOLLOW':
++                result['decision_reason'] = 'inside_roundabout'
++            elif self.state == 'COMMIT':
++                result['decision_reason'] = 'safe_gap_confirmed' if launch else 'commit_latched'
++            elif result['gap_check_active']:
++                result['decision_reason'] = ('waiting_conflict_vehicle' if result['dangerous_vehicle_count'] else 'safe_gap_confirming')
+             return result
+         if not fresh or dist > c['max_path_error_m']:
+             self.clear_since = None
+             self.safe_frames = 0
+-            self._reset_recovery()
+             return finish('stale_or_invalid_input' if not fresh else 'off_path', stop=True, emergency=True)
+         # The mission does not own normal driving outside its approach/exit.
+         if not result['active']:
+@@ -339,24 +227,26 @@
+             self.safe_frames = 0
+             self.merge_target = self.merge_ceiling if self.use_prediction else c['merge_speed']
+             self.clear_since = None
+-            self.previous_relevant.clear()
+-            self.lost.clear()
+-            self._reset_recovery()
++            self.static_hazards.clear()
+             return finish('csv_cruise' if self.state == 'CRUISE' else 'mission_complete',
+                           c.get('cruise_speed', c['exit_speed']))
+         if not obstacles_fresh:
+             self.clear_since = None
+             self.safe_frames = 0
+-            self._reset_recovery()
+             return finish('obstacles_stale_or_invalid', stop=True, emergency=True)
+         tracks = self._tracks(now)
+-        # Missing stationary in-path detections are still physical hazards.
+-        # Retaining their measured boxes also lets approach speed brake toward
+-        # their location instead of imposing a global emergency stop by ID.
+-        tracks.extend(t for t,stamp in self.lost.values()
+-                      if math.hypot(t.vx,t.vy) < c['min_vehicle_speed'])
++        # A stationary footprint on our forward lane is not circulating traffic,
++        # but missing detections are not evidence that it has disappeared.
++        for t in tracks:
++            lat, os, ox, oy = self.path.project(t.x,t.y)
++            side = projected_radius(t.length,t.width,t.yaw,(-oy,ox))
++            if (math.hypot(t.vx,t.vy) < c['min_vehicle_speed'] and os >= s and
++                    lat <= c['ego_width']/2+side+c['emergency_margin_m'] and
++                    not any(math.hypot(t.x-o.x,t.y-o.y)<0.5 for o in self.static_hazards)):
++                self.static_hazards.append(t)
++        tracks.extend(t for t in self.static_hazards if t not in tracks)
++        static_cap = float('inf')
+         emergency = False
+-        relevant = set()
+         blockers = []
+         front, rear = c['ego_front_m'], c['ego_length']-c['ego_front_m']
+         available_distance = max(0., self.m['stop_line']-s-front-c['stop_margin_m'])
+@@ -370,7 +260,6 @@
+         ego_out = eta(self.m['conflict_end']-s+rear, ego.speed, c['merge_speed'], c['max_accel'])
+         result['ego_eta'] = ego_in
+         lead = None
+-        xmin, xmax, ymin, ymax = c['roi_map']
+         for t in tracks:
+             sep, ttc = swept_boxes(ego, t, c)
+             result['minimum_distance'] = sep if result['minimum_distance'] is None else min(sep, result['minimum_distance'])
+@@ -378,7 +267,6 @@
+                 result['minimum_ttc'] = ttc if result['minimum_ttc'] is None else min(ttc, result['minimum_ttc'])
+                 if ttc <= c['emergency_ttc']:
+                     emergency = True
+-                    relevant.add(t.id)
+                     result.setdefault('emergency_track_ids', []).append(t.id)
+             # Roundabout-only lead following: only moving circulating/lead
+             # vehicles may reduce the commanded merge speed. Stationary LiDAR
+@@ -390,124 +278,42 @@
+             along_radius = projected_radius(t.length, t.width, t.yaw, (ox, oy))
+             side_radius = projected_radius(t.length, t.width, t.yaw, (-oy, ox))
+             gap = os-s-front-along_radius
++            if (speed < c['min_vehicle_speed'] and os > s and
++                    lateral <= c['ego_width']/2+side_radius+c['emergency_margin_m']):
++                static_cap = min(static_cap, math.sqrt(max(0.,2*c['comfortable_decel']*(gap-c['minimum_gap']))))
++                if gap <= c['emergency_gap_m']:
++                    emergency = True
+             if (speed >= c['min_vehicle_speed'] and
+                     lateral <= c['ego_width']/2 + side_radius + c['emergency_margin_m'] and
+                     os > s and gap < c['lead_range_m'] and aligned):
+                 if lead is None or gap < lead[0]:
+                     lead = (gap, max(0.,projected), t)
+-            if not xmin <= t.x <= xmax or not ymin <= t.y <= ymax:
+-                continue
+-            lat, vs, vtx, vty = self.circulating.project(t.x,t.y)
+-            if lat > c['corridor_m'] + projected_radius(t.length,t.width,t.yaw,(-vty,vtx)):
+-                continue
+-            projected = t.vx*vtx+t.vy*vty
+-            radius = projected_radius(t.length,t.width,t.yaw,(vtx,vty))
+-            din, dout = self.cs-vs-radius, self.ce-vs+radius
+-            if dout < 0:  # Passed the zone; do not wrap to another lap.
+-                continue
+-            if speed < c['min_vehicle_speed']:
+-                if din > 0:
+-                    continue
+-                # A stopped object does not vacate the conflict when a timer ends.
+-                interval = (0., float('inf'))
+-            elif projected/max(speed,1e-9) < c['direction_cos_min']:
+-                continue
+-            else:
+-                interval = (max(0.,din/projected), max(0.,dout/projected))
+-            # Low-speed tests may occupy the conflict longer than the nominal
+-            # prediction horizon. Never truncate before our own clearance time.
+-            if interval[0] > max(c['prediction_horizon'], ego_out+c['rear_time_buffer_s']):
+-                continue
+-            # Length and buffers on BOTH occupancy intervals, checked for every car.
+-            gap_time = max(interval[0]-ego_out, ego_in-interval[1])
+-            if not (ego_out+c['rear_time_buffer_s'] < interval[0] or interval[1]+c['front_time_buffer_s'] < ego_in):
+-                blockers.append((interval[0], t.id, gap_time))
+-                # Distant future interactions are gap blockers, not a reason
+-                # to latch an unknown ID as an immediate collision hazard.
+-                if not self.use_prediction and interval[0] <= c.get('critical_track_horizon_s',3.):
+-                    relevant.add(t.id)
+         if lead:
+             gap, speed, t = lead
+             desired = c['minimum_gap'] + c['time_headway']*ego.speed
+-            if speed < c['min_vehicle_speed'] or gap <= desired+ego.speed**2/(2*c['comfortable_decel']):
+-                relevant.add(t.id)
+             result.update(lead_vehicle_id=t.id, lead_x=t.x, lead_y=t.y, lead_speed=speed,
+                           lead_gap=gap, desired_gap=desired, relative_speed=ego.speed-speed,
+                           time_gap=gap/max(ego.speed,.1))
+             if gap <= c['emergency_gap_m']:
+                 emergency = True
+                 result.setdefault('emergency_track_ids', []).append(t.id)
+-        if self.use_prediction and gap_check:
+-            result['interval_blocking_ids']=[b[1] for b in blockers]
+-            previous_target = self.merge_target
+-            predicted=self.predictor.assess(ego,tracks,s,self.m['exit'],self.merge_target)
+-            attempts = [dict(speed_mps=self.merge_target,
+-                             blocking_ids=predicted['predicted_blocking_ids'],
+-                             complete=predicted['prediction_complete'])]
+-            if self.state not in ('COMMIT','FOLLOW') and (predicted['predicted_blocking_ids'] or not predicted['prediction_complete']):
+-                # Prefer a faster collision-free traversal. Lower candidates
+-                # are fallbacks when catching a leading vehicle would be unsafe.
+-                candidates = sorted(set([c['merge_speed'],self.merge_ceiling]+
+-                    list(np.arange(c['merge_speed'],self.merge_ceiling,.5))),reverse=True)
+-                for candidate in candidates:
+-                    if abs(candidate-self.merge_target) < 1e-6:
+-                        continue
+-                    trial=self.predictor.assess(ego,tracks,s,self.m['exit'],float(candidate))
+-                    attempts.append(dict(speed_mps=float(candidate),blocking_ids=trial['predicted_blocking_ids'],
+-                                         complete=trial['prediction_complete']))
+-                    if trial['prediction_complete'] and not trial['predicted_blocking_ids']:
+-                        self.merge_target=float(candidate)
+-                        predicted=trial
+-                        break
+-            if self.merge_target != previous_target:
+-                self.clear_since=None
+-                self.safe_frames=0
+-            result.update(selected_merge_speed_mps=self.merge_target,merge_speed_candidates=attempts)
+-            result['ego_eta']=eta(self.m['conflict_start']-s-front,ego.speed,self.merge_target,c['max_accel'])
+-            result.update(predicted)
+-            blockers=[(predicted['predicted_collision_time'],i,0.) for i in predicted['predicted_blocking_ids']]
+-            relevant.update(hit['id'] for hit in predicted['predicted_collisions']
+-                            if hit['time_s'] <= c.get('critical_track_horizon_s',3.))
+-            relevant.update(t.id for t in tracks if t.id in predicted['predicted_blocking_ids']
+-                            and math.hypot(t.vx,t.vy) < c['min_vehicle_speed'])
+-            if not predicted['prediction_complete']:
+-                self.clear_since=None
+-                self._reset_recovery()
+-                # Far before the stop line, keep approaching. At the line an
+-                # incomplete candidate must never become permission to enter.
+-                if near_yield:
+-                    self.previous_relevant=relevant
+-                    return finish('prediction_horizon_insufficient',stop=True)
+-                blockers.append((0.,-1,0.))
+-        self.previous_relevant = relevant
+-        result['lost_track_ids'] = sorted(self.lost)
+-        if blockers:
+-            result['vehicle_eta'],result['blocking_vehicle_id'],result['merge_gap'] = min(blockers)
+-            blocked_ids = {b[1] for b in blockers}
+-            result['blocking_track_details'] = [dict(id=t.id,x=t.x,y=t.y,yaw=t.yaw,
+-                length=t.length,width=t.width,vx=t.vx,vy=t.vy,
+-                age_s=max(0.,now-(self.cache.get(t.id) or self.lost[t.id])[1]),
+-                source='lost_stationary' if t.id in self.lost else 'observed_or_held')
+-                for t in tracks if t.id in blocked_ids]
+-        if emergency:
+-            self.clear_since = None
+-            self.safe_frames = 0
+-            self._reset_recovery()
+-            if self.lost and s+front+c['stop_margin_m'] < self.m['conflict_start']:
+-                self.state = 'WAIT'
+-            return finish('emergency_collision_risk', stop=True, emergency=True)
+-        if self.lost:
+-            reason = self._recheck_lost(s,result)
+-            result['lost_track_ids'] = sorted(self.lost)
+-            result['track_recovery_reason'] = reason
+-            if self.lost and gap_check:
++        if gap_check:
++            assessment = self.conflicts.evaluate(ego, tracks, s)
++            result.update(assessment)
++            blockers = assessment.pop('_blockers', [])
++            result.pop('_blockers', None)
++            if blockers:
++                result['vehicle_eta'], result['blocking_vehicle_id'], result['merge_gap'] = min(blockers)
++            if assessment.get('predicted_collision_time') is not None and assessment['predicted_collision_time'] <= c['emergency_ttc']:
++                emergency = True
++            if not assessment['prediction_complete'] and not self.entry_was_authorized:
+                 self.clear_since = None
+                 self.safe_frames = 0
+-                if s+front+c['stop_margin_m'] < self.m['conflict_start']:
+-                    self.state = 'WAIT'
+-                # Unknown track identity is a controlled wait, not evidence of
+-                # a collision in the next emergency_ttc seconds.
+-                return finish(reason, stop=True)
++                return finish('prediction_horizon_insufficient', stop=True, emergency=True)
++        if emergency:
++            self.clear_since = None
++            self.safe_frames = 0
++            return finish('emergency_collision_risk', stop=True, emergency=True)
+         if not gap_check:
+             self.state = 'APPROACH'
+             self.clear_since = None
+@@ -517,6 +323,7 @@
+                 gap, speed, _ = lead
+                 target = min(target, max(0.,speed+c['gap_kp']*(gap-result['desired_gap'])),
+                              math.sqrt(max(0.,speed*speed+2*c['comfortable_decel']*(gap-c['minimum_gap']))))
++            target = min(target, static_cap)
+             return finish('approach_to_yield' if not lead else 'lead_following_approach',target)
+         # Once a safe gap has been confirmed and COMMIT starts, do not
+         # bounce back to WAIT only because a new non-emergency gap blocker appears.
+@@ -544,7 +351,7 @@
+                 self.safe_frames += 1
+             span = 0. if self.clear_since is None else self.frame_stamp-self.clear_since
+             result.update(safe_frames=self.safe_frames,safe_confirm_elapsed_s=span)
+-            safe = self.safe_frames >= 2 and span >= c['safe_confirm_s']
++            safe = self.safe_frames >= 2 and span+1e-9 >= c['safe_confirm_s']
+             approach_cap = math.sqrt(2*c['comfortable_decel']*available_distance)
+             if safe:
+                 self.state = 'COMMIT'
+@@ -564,4 +371,5 @@
+             following = max(0., speed+c['gap_kp']*(gap-result['desired_gap']))
+             braking_cap = math.sqrt(max(0., speed*speed+2*c['comfortable_decel']*(gap-c['minimum_gap'])))
+             target = min(target, following, braking_cap)
++        target = min(target, static_cap)
+         return finish('lead_following' if lead else self.state.lower(), target, launch=launch)
+--- v42/src/roundabout_mission/entry_decision.py
++++ v5/src/roundabout_mission/entry_decision.py
+@@ -0,0 +1,118 @@
++"""ID-independent observations -> occupancy intervals -> physical collision checks.
++
++Historical observations are independent motion hypotheses, not recovered tracks.
++Their lifetime is bounded from the source stamp and cannot be refreshed by ticks.
++"""
++import math
++from collections import deque
++from dataclasses import replace
++
++
++class ObservationWindow:
++    def __init__(self, cfg):
++        self.hold = cfg.get('entry_occlusion_hold_s', 0.8)
++        if not math.isfinite(self.hold) or not 0.4 <= self.hold <= 3.0:
++            raise ValueError('entry_occlusion_hold_s must be 0.4..3 seconds')
++        self.frames = deque()
++        self.cfg = cfg
++
++    def update(self, tracks, stamp):
++        self.frames.append((stamp, tuple(tracks)))
++        self._expire(stamp)
++
++    def _expire(self, now):
++        while self.frames and now-self.frames[0][0] > self.hold:
++            self.frames.popleft()
++
++    def project(self, now, predictor, track_type):
++        self._expire(now)
++        result = []
++        # Latest geometry covers older observations in the same small spatial
++        # cell only when their motion agrees within the predictor's uncertainty.
++        # This is scene compaction, not raw-ID matching or identity recovery.
++        for stamp, tracks in reversed(self.frames):
++            for t in tracks:
++                x,y,yaw,vx,vy = predictor.propagate(t, max(0., now-stamp))
++                candidate = track_type(t.id,x,y,yaw,t.length,t.width,vx,vy)
++                # Collapse virtually identical spatial hypotheses, never by ID.
++                # Distinct/split fragments stay conservative independent hazards.
++                if any(math.hypot(x-o.x,y-o.y)<0.15 and
++                       math.hypot(vx-o.vx,vy-o.vy)<0.15 and
++                       abs(t.length-o.length)<0.15 and abs(t.width-o.width)<0.15
++                       for o in result):
++                    continue
++                result.append(candidate)
++        return result
++
++
++class ConflictEvaluator:
++    def __init__(self, decision):
++        self.d = decision
++        for name, default in (('entry_vehicle_length_m',4.5),('entry_vehicle_width_m',1.8)):
++            if not math.isfinite(decision.c.get(name,default)) or decision.c.get(name,default)<=0:
++                raise ValueError(name+' must be finite and positive')
++
++    def evaluate(self, ego, tracks, s):
++        from .core import eta, projected_radius
++        d, c = self.d, self.d.c
++        target = d.merge_target
++        ego_in = eta(d.m['conflict_start']-s-c['ego_front_m'], ego.speed,target,c['max_accel'])
++        ego_out = eta(d.m['conflict_end']-s+c['ego_length']-c['ego_front_m'],ego.speed,target,c['max_accel'])
++        candidates, blockers, intervals, gaps = [], [], [], []
++        moving = []
++        for t in tracks:
++            speed = math.hypot(t.vx,t.vy)
++            xmin,xmax,ymin,ymax = c['roi_map']
++            if speed < c['min_vehicle_speed']:
++                # Not circulating traffic. A measured static footprint on our
++                # forward path still prevents launching through a real obstacle.
++                lat,os,tx,ty = d.path.project(t.x,t.y)
++                radius=projected_radius(t.length,t.width,t.yaw,(tx,ty))
++                side=projected_radius(t.length,t.width,t.yaw,(-ty,tx))
++                if (s-c['ego_length']+c['ego_front_m'] <= os+radius and
++                    os-radius <= d.m['conflict_end'] and
++                    lat <= c['ego_width']/2+side+c['emergency_margin_m']):
++                    blockers.append((0.,t.id,-ego_out))
++                continue
++            lat,vs,tx,ty = d.circulating.project(t.x,t.y)
++            projected=t.vx*tx+t.vy*ty
++            side=projected_radius(t.length,t.width,t.yaw,(-ty,tx))
++            circulating = (xmin <= t.x <= xmax and ymin <= t.y <= ymax and
++                           lat <= c['corridor_m']+side and
++                           projected/speed >= c['direction_cos_min'])
++            if circulating:
++                # Only plausible circulating fragments receive a vehicle-sized
++                # envelope; unrelated moving roadside noise keeps measured size.
++                t=replace(t,length=max(t.length,c.get('entry_vehicle_length_m',4.5)),
++                          width=max(t.width,c.get('entry_vehicle_width_m',1.8)))
++            moving.append(t)
++            if not circulating:
++                continue
++            radius=projected_radius(t.length,t.width,t.yaw,(tx,ty))
++            din,dout=d.cs-vs-radius,d.ce-vs+radius
++            if dout<0:
++                continue
++            start,end=max(0.,din/projected),max(0.,dout/projected)
++            if start>max(c['prediction_horizon'],ego_out+c['rear_time_buffer_s']):
++                continue
++            candidates.append(t)
++            intervals.append(start)
++            gap=max(start-ego_out,ego_in-end)
++            gaps.append(gap)
++            if not (ego_out+c['rear_time_buffer_s']<start or end+c['front_time_buffer_s']<ego_in):
++                blockers.append((start,t.id,gap))
++        # Existing geometric predictor remains an independent safety check.
++        # Check through conflict clearance rather than an unrelated future lap.
++        prediction = d.predictor.assess(ego,moving,s,
++            (d.m['exit'] if d.entry_was_authorized else max(s,d.m['conflict_end']+c['ego_length']-c['ego_front_m'])),target) if d.use_prediction else dict(
++                prediction_complete=True,predicted_blocking_ids=[],predicted_collisions=[],predicted_collision_time=None)
++        for hit in prediction['predicted_collisions']:
++            blockers.append((hit['time_s'],hit['id'],0.))
++        # Counts are spatial hypotheses, not uniquely identified physical cars.
++        return dict(prediction, _blockers=blockers,
++                    dangerous_vehicle_count=len(blockers),
++                    conflict_candidate_count=len(candidates),
++                    minimum_conflict_eta=min(intervals) if intervals else None,
++                    ego_conflict_eta=ego_in, ego_eta=ego_in,
++                    minimum_time_gap=min(gaps) if gaps else None,
++                    selected_merge_speed_mps=target)
+--- v42/src/roundabout_mission/ros_io.py
++++ v5/src/roundabout_mission/ros_io.py
+@@ -46,7 +46,7 @@
+     def write(self, row):
+         if self.stream:
+             if self.writer is None:
+-                fields = 'timestamp state ego_x ego_y ego_yaw_rad ego_speed ego_s active target_speed actual_target_speed accel_cmd brake_cmd steering_cmd stop_required allowed emergency blocking_vehicle_id vehicle_eta ego_eta merge_gap lead_vehicle_id lead_x lead_y lead_speed lead_gap desired_gap relative_speed time_gap minimum_ttc minimum_distance decision_reason driver_input_fresh control_enabled lost_track_ids version odom_fresh obstacle_fresh emergency_track_ids interval_blocking_ids predicted_blocking_ids predicted_collision_time predicted_collisions prediction_complete prediction_model prediction_horizon_s control_reason command_topic target_index recovered_track_ids id_handoffs recovery_frames recovery_span_s track_recovery_reason decision_compute_ms decision_phase gap_check_active stop_line_distance_m yield_base_s safe_frames safe_confirm_elapsed_s blocking_track_details selected_merge_speed_mps merge_speed_candidates'.split()
++                fields = 'timestamp state ego_x ego_y ego_yaw_rad ego_speed ego_s active target_speed actual_target_speed accel_cmd brake_cmd steering_cmd stop_required allowed emergency blocking_vehicle_id vehicle_eta ego_eta merge_gap lead_vehicle_id lead_x lead_y lead_speed lead_gap desired_gap relative_speed time_gap minimum_ttc minimum_distance decision_reason driver_input_fresh control_enabled lost_track_ids version odom_fresh obstacle_fresh emergency_track_ids interval_blocking_ids predicted_blocking_ids predicted_collision_time predicted_collisions prediction_complete prediction_model prediction_horizon_s control_reason command_topic target_index recovered_track_ids id_handoffs recovery_frames recovery_span_s track_recovery_reason decision_compute_ms decision_phase gap_check_active stop_line_distance_m yield_base_s safe_frames safe_confirm_elapsed_s blocking_track_details selected_merge_speed_mps merge_speed_candidates dangerous_vehicle_count conflict_candidate_count minimum_conflict_eta ego_conflict_eta minimum_time_gap safe_duration commit_latched emergency_active'.split()
+                 self.writer = csv.DictWriter(self.stream, fieldnames=fields, extrasaction='ignore')
+                 self.writer.writeheader()
+             self.writer.writerow(row)
+--- v42/src/roundabout_mission/visualization.py
++++ v5/src/roundabout_mission/visualization.py
+@@ -0,0 +1,36 @@
++"""RViz shows the ego conflict traversal currently accepted by the decision.
++
++Green is a confirmed permission, not a claim of observed free space behind an
++occluder. Yellow is confirmation pending; red is blocked or emergency.
++"""
++def markers(engine, row, frame, stamp):
++    from visualization_msgs.msg import Marker, MarkerArray
++    from geometry_msgs.msg import Point
++    import rospy
++    array=MarkerArray()
++    m=Marker()
++    m.header.frame_id=frame; m.header.stamp=stamp
++    m.ns='entry_gap'; m.id=0; m.type=Marker.LINE_STRIP; m.action=Marker.ADD
++    m.pose.orientation.w=1.; m.scale.x=0.55; m.color.a=0.9
++    usable=(row['active'] and row['commit_latched'] and not row['stop_required'] and not row['emergency_active'])
++    blocked=row['emergency_active'] or row['dangerous_vehicle_count']>0
++    m.color.r=0. if usable else 1.
++    m.color.g=1. if usable or not blocked else 0.
++    m.color.b=0.
++    lo=engine.m['stop_line']; hi=engine.m['conflict_end']
++    for p,s in zip(engine.path.points,engine.path.s):
++        if lo<=s<=hi:
++            q=Point();q.x=p.x;q.y=p.y;q.z=getattr(p,'z',0.)+0.3;m.points.append(q)
++    m.lifetime=rospy.Duration(0.5)
++    array.markers.append(m)
++    label=Marker();label.header=m.header;label.ns='entry_gap';label.id=1
++    label.type=Marker.TEXT_VIEW_FACING;label.action=Marker.ADD
++    label.pose.orientation.w=1.;label.scale.z=1.;label.color=m.color
++    if m.points:
++        label.pose.position.x=m.points[0].x;label.pose.position.y=m.points[0].y
++    label.pose.position.z=(m.points[0].z+2.2) if m.points else 2.5;label.lifetime=m.lifetime
++    label.text='{} | {} | hazards={} | safe={:.2f}s'.format(row['state'],row['decision_reason'],row['dangerous_vehicle_count'],row['safe_duration'])
++    array.markers.append(label)
++    if not row['active']:
++        for item in array.markers:item.action=Marker.DELETE
++    return array
+--- v42/test/test_v5_entry.py
++++ v5/test/test_v5_entry.py
+@@ -0,0 +1,102 @@
++"""Standalone synthetic decision regressions; no ROS or external repo needed."""
++import copy
++import json
++import math
++import unittest
++from pathlib import Path
++from types import SimpleNamespace as P
++import yaml
++from roundabout_mission.core import Decision, Ego, Track
++
++BASE=yaml.safe_load((Path(__file__).parents[1]/'config/roundabout.yaml').read_text())
++BASE.update(mission_indices=dict(approach=5,stop_line=20,entry=25,conflict_start=30,conflict_end=35,merge_complete=45,exit=70),circulating_conflict_indices=[45,55],roi_map=[-10,90,-60,60])
++PATH=[P(x=x,y=0) for x in range(101)]
++CIRC=[P(x=32,y=y) for y in range(-50,51)]
++def car(id=54,y=-20,vy=3,x=32,vx=0,length=4.5,width=1.8):
++    return Track(id,x,y,math.atan2(vy,vx),length,width,vx,vy)
++
++class EntryV5(unittest.TestCase):
++    def setUp(self):
++        self.d=Decision(PATH,CIRC,copy.deepcopy(BASE));self.ego=Ego(15.9,0,0,0)
++    def step(self,t,tracks=()):
++        self.d.update_tracks(tracks,t)
++        r=self.d.step(self.ego,t)
++        json.dumps(r,allow_nan=False)
++        return r
++    def commit(self):
++        self.step(1)
++        self.assertEqual(self.step(1.3)['state'],'COMMIT')
++    def test_case1_approach_pass_clear_commit(self):
++        self.assertGreater(self.step(1,[car()])['dangerous_vehicle_count'],0)
++        self.assertFalse(self.step(2,[car(y=30)])['commit_latched'])
++        self.assertTrue(self.step(2.3,[car(y=31)])['commit_latched'])
++    def test_case2_id_change_remains_unsafe(self):
++        self.step(1,[car()])
++        r=self.step(1.2,[car(id=71,y=-19.4)])
++        self.assertGreater(r['dangerous_vehicle_count'],0)
++        self.assertEqual(r['safe_duration'],0)
++    def test_case3_short_occlusion(self):
++        self.step(1,[car()])
++        for t in (1.1,1.3,1.5,1.7):
++            self.assertGreater(self.step(t)['dangerous_vehicle_count'],0)
++        self.assertFalse(self.step(1.75,[car(id=71,y=-17.75)])['commit_latched'])
++    def test_case4_split_partial_boxes(self):
++        self.step(1,[car()])
++        r=self.step(1.2,[car(id=71,y=-19.5,length=.3,width=.2),car(id=72,y=-18.5,length=.2,width=.3)])
++        self.assertGreater(r['dangerous_vehicle_count'],0)
++        self.assertFalse(r['commit_latched'])
++    def test_case5_exact_confirmation(self):
++        self.step(1)
++        self.assertFalse(self.step(1.29)['commit_latched'])
++        self.assertTrue(self.step(1.3)['commit_latched'])
++    def test_case6_latch_id_change(self):
++        self.commit()
++        for t,i in ((1.4,54),(1.5,71),(1.6,99)):
++            r=self.step(t,[car(id=i)])
++            self.assertEqual(r['state'],'COMMIT')
++            self.assertTrue(r['commit_latched'])
++    def test_case7_emergency_after_commit(self):
++        self.commit();self.ego=Ego(23,0,0,2)
++        r=self.step(1.4,[car(x=25,y=0,vy=0)])
++        self.assertTrue(r['emergency_active']);self.assertTrue(r['stop_required'])
++        self.assertTrue(r['commit_latched']);self.assertEqual(r['state'],'COMMIT')
++        self.assertEqual(r['target_speed'],0)
++    def test_case8_roadside_stationary_noise(self):
++        for t in (1.,1.3):r=self.step(t,[car(x=32,y=-20,vy=.1)])
++        self.assertEqual(r['conflict_candidate_count'],0)
++        self.assertTrue(r['commit_latched'])
++    def test_stationary_on_path_retained_after_loss(self):
++        self.step(1,[car(x=32,y=0,vy=0)])
++        for t in (2.,2.4,3.):
++            r=self.step(t)
++            self.assertFalse(r['commit_latched'])
++            self.assertGreater(r['dangerous_vehicle_count'],0)
++    def test_id_permutation_has_identical_outputs(self):
++        other=Decision(PATH,CIRC,copy.deepcopy(BASE))
++        for t,y in ((1.,-20),(1.2,-19.4),(1.4,-18.8),(2.5,30),(2.8,31)):
++            a=self.step(t,[car(id=54,y=y)])
++            other.update_tracks([car(id=int(t*100),y=y)],t)
++            b=other.step(self.ego,t)
++            for key in ('state','safe_duration','dangerous_vehicle_count','target_speed','commit_latched','emergency_active'):
++                self.assertEqual(a[key],b[key],key)
++    def test_safe_timer_not_reset_by_harmless_id_change(self):
++        self.step(1,[car(id=54,y=30)])
++        self.assertTrue(self.step(1.3,[car(id=71,y=31)])['commit_latched'])
++    def test_timer_ticks_and_duplicates_do_not_confirm(self):
++        self.step(1)
++        self.assertFalse(self.d.step(self.ego,1.4)['commit_latched'])
++        self.assertFalse(self.step(1)['commit_latched'])
++    def test_watchdog_brakes_latch_preserved(self):
++        self.commit()
++        r=self.d.step(self.ego,1.4,True,False)
++        self.assertTrue(r['emergency_active']);self.assertTrue(r['commit_latched'])
++    def test_nearly_stopped_velocity_during_occlusion_keeps_hazard(self):
++        self.step(1,[car()])
++        self.assertGreater(self.step(1.3,[car(id=71,vy=.01)])['dangerous_vehicle_count'],0)
++    def test_emergency_stop_command_fields(self):
++        # The separate existing driver adapter test asserts accel=0, brake=1.
++        self.commit();self.ego=Ego(23,0,0,2)
++        r=self.step(1.4,[car(x=25,y=0,vy=0)])
++        self.assertTrue(r['emergency']);self.assertEqual(r['target_speed'],0.)
++
++if __name__=='__main__':unittest.main()
+--- v42/test/test_v5_visualization.py
++++ v5/test/test_v5_visualization.py
+@@ -0,0 +1,32 @@
++import sys
++import types
++import unittest
++from unittest.mock import patch
++from roundabout_mission.visualization import markers
++import test_v5_entry
++
++class Marker:
++    LINE_STRIP=4;TEXT_VIEW_FACING=9;ADD=0;DELETE=2
++    def __init__(self):
++        self.header=types.SimpleNamespace()
++        self.pose=types.SimpleNamespace(orientation=types.SimpleNamespace(),position=types.SimpleNamespace())
++        self.scale=types.SimpleNamespace();self.color=types.SimpleNamespace();self.points=[]
++
++class Visualization(unittest.TestCase):
++    def render(self,d,row):
++        mods={k:types.ModuleType(k) for k in ('visualization_msgs','visualization_msgs.msg','geometry_msgs','geometry_msgs.msg','rospy')}
++        mods['visualization_msgs.msg'].Marker=Marker
++        mods['visualization_msgs.msg'].MarkerArray=lambda:types.SimpleNamespace(markers=[])
++        mods['geometry_msgs.msg'].Point=types.SimpleNamespace
++        mods['rospy'].Duration=lambda x:x
++        with patch.dict(sys.modules,mods):return markers(d,row,'map',1)
++    def test_confirmed_gap_green_emergency_red_and_expiry(self):
++        t=test_v5_entry.EntryV5();t.setUp();t.step(1);r=t.step(1.3)
++        m=self.render(t.d,r).markers[0]
++        self.assertEqual((m.color.r,m.color.g),(0.,1.));self.assertGreater(len(m.points),1)
++        self.assertEqual(m.lifetime,.5)
++        r.update(emergency_active=True,stop_required=True)
++        m=self.render(t.d,r).markers[0]
++        self.assertEqual((m.color.r,m.color.g),(1.,0.))
++        r['active']=False
++        self.assertTrue(all(m.action==Marker.DELETE for m in self.render(t.d,r).markers))

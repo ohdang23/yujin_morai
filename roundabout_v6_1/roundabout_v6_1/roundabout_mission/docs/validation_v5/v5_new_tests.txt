@@ -1,0 +1,21 @@
+test_case1_approach_pass_clear_commit (test_v5_entry.EntryV5.test_case1_approach_pass_clear_commit) ... ok
+test_case2_id_change_remains_unsafe (test_v5_entry.EntryV5.test_case2_id_change_remains_unsafe) ... ok
+test_case3_short_occlusion (test_v5_entry.EntryV5.test_case3_short_occlusion) ... ok
+test_case4_split_partial_boxes (test_v5_entry.EntryV5.test_case4_split_partial_boxes) ... ok
+test_case5_exact_confirmation (test_v5_entry.EntryV5.test_case5_exact_confirmation) ... ok
+test_case6_latch_id_change (test_v5_entry.EntryV5.test_case6_latch_id_change) ... ok
+test_case7_emergency_after_commit (test_v5_entry.EntryV5.test_case7_emergency_after_commit) ... ok
+test_case8_roadside_stationary_noise (test_v5_entry.EntryV5.test_case8_roadside_stationary_noise) ... ok
+test_emergency_stop_command_fields (test_v5_entry.EntryV5.test_emergency_stop_command_fields) ... ok
+test_id_permutation_has_identical_outputs (test_v5_entry.EntryV5.test_id_permutation_has_identical_outputs) ... ok
+test_nearly_stopped_velocity_during_occlusion_keeps_hazard (test_v5_entry.EntryV5.test_nearly_stopped_velocity_during_occlusion_keeps_hazard) ... ok
+test_safe_timer_not_reset_by_harmless_id_change (test_v5_entry.EntryV5.test_safe_timer_not_reset_by_harmless_id_change) ... ok
+test_stationary_on_path_retained_after_loss (test_v5_entry.EntryV5.test_stationary_on_path_retained_after_loss) ... ok
+test_timer_ticks_and_duplicates_do_not_confirm (test_v5_entry.EntryV5.test_timer_ticks_and_duplicates_do_not_confirm) ... ok
+test_watchdog_brakes_latch_preserved (test_v5_entry.EntryV5.test_watchdog_brakes_latch_preserved) ... ok
+test_confirmed_gap_green_emergency_red_and_expiry (test_v5_visualization.Visualization.test_confirmed_gap_green_emergency_red_and_expiry) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.241s
+
+OK

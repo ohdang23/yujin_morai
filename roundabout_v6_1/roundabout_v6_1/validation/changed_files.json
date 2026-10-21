@@ -1,0 +1,12 @@
+[
+  "CMakeLists.txt",
+  "config/roundabout.yaml",
+  "package.xml",
+  "scripts/prepare_roundabout_v6.py",
+  "scripts/roundabout_record_trial.py",
+  "scripts/roundabout_trial_summary.py",
+  "src/roundabout_mission/__init__.py",
+  "src/roundabout_mission/core.py",
+  "src/roundabout_mission/ros_io.py",
+  "src/roundabout_mission/trial_tools.py"
+]

@@ -1,0 +1,42 @@
+{
+  "seed": 71,
+  "legacy": false,
+  "vehicles": 0,
+  "perturb": true,
+  "outcome": "exit",
+  "simulated_seconds": 545.8,
+  "max_path_error": 0.253,
+  "states": [
+    "CRUISE",
+    "APPROACH",
+    "WAIT",
+    "COMMIT",
+    "FOLLOW",
+    "EXIT"
+  ],
+  "reasons": {
+    "csv_cruise": 5090,
+    "approach_to_yield": 169,
+    "wait": 5,
+    "waiting_for_safe_gap": 3,
+    "commit": 141,
+    "follow": 50,
+    "mission_complete": 1
+  },
+  "final_reason": "mission_complete",
+  "final_speed": 3.3334246447178417,
+  "final_s": 932.9178202520781,
+  "gate_ms_p95": 0.11,
+  "wall_seconds": 10.83,
+  "approach_stop_commands": 0,
+  "moving_emergency_commands": 0,
+  "start_index": 0,
+  "merge_speed": 3.0,
+  "traffic": [],
+  "model": {
+    "throttle_gain": 3.9856300187311486,
+    "brake_gain": 6.430044227823317,
+    "drag": 0.06033919997958271,
+    "latency": 0.1
+  }
+}

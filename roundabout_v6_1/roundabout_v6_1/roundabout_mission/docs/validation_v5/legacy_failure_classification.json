@@ -1,0 +1,132 @@
+[
+  {
+    "test": "test_track_recovery.Recovery.test_ambiguous_ids_are_not_merged.test_ambiguous_ids_are_not_merged",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_approach_and_gap.ApproachAndGap.test_fast_candidate_can_clear_fast_car_without_relaxing_boxes.test_fast_candidate_can_clear_fast_car_without_relaxing_boxes",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_approach_and_gap.ApproachAndGap.test_fast_candidate_is_rejected_when_it_catches_a_slow_lead.test_fast_candidate_is_rejected_when_it_catches_a_slow_lead",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_approach_and_gap.ApproachAndGap.test_log_position_confirms_loss_without_claiming_imminent_collision.test_log_position_confirms_loss_without_claiming_imminent_collision",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_approach_and_gap.ApproachAndGap.test_loss_reconfirmation_progresses_during_blocked_traffic.test_loss_reconfirmation_progresses_during_blocked_traffic",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_core.Scenarios.test_case6_lead_accelerates_smoothly.test_case6_lead_accelerates_smoothly",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_core.Scenarios.test_track_hold_expiry_does_not_release.test_track_hold_expiry_does_not_release",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit.test_pedal_mode_and_rate_limit",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_prediction.TrajectoryPrediction.test_curved_id_handoff_compares_propagated_velocity.test_curved_id_handoff_compares_propagated_velocity",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_prediction.TrajectoryPrediction.test_new_conflict_revokes_commit_before_physical_entry.test_new_conflict_revokes_commit_before_physical_entry",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_prediction.TrajectoryPrediction.test_stationary_in_path_is_a_predicted_hazard.test_stationary_in_path_is_a_predicted_hazard",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_prediction.TrajectoryPrediction.test_stationary_velocity_residual_does_not_drift_a_curb_into_route.test_stationary_velocity_residual_does_not_drift_a_curb_into_route",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_authorized_stop_after_entry_before_conflict_can_recheck.test_authorized_stop_after_entry_before_conflict_can_recheck",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_clear_scene_recovers_then_rechecks_before_commit.test_clear_scene_recovers_then_rechecks_before_commit",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_different_vehicle_blocks_entry_but_not_scene_reconfirmation.test_different_vehicle_blocks_entry_but_not_scene_reconfirmation",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_duplicate_frames_cannot_release.test_duplicate_frames_cannot_release",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_id_handoff_removes_old_history_and_evaluates_new_track.test_id_handoff_removes_old_history_and_evaluates_new_track",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_inside_conflict_requires_reacquisition.test_inside_conflict_requires_reacquisition",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_lidar_dropout_restarts_confirmation.test_lidar_dropout_restarts_confirmation",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_same_id_returns_but_current_hazard_still_stops.test_same_id_returns_but_current_hazard_still_stops",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_stationary_obstacle_cannot_be_cleared_by_empty_lists.test_stationary_obstacle_cannot_be_cleared_by_empty_lists",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_thirty_one_old_moving_ids_do_not_latch_forever.test_thirty_one_old_moving_ids_do_not_latch_forever",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_track_recovery.Recovery.test_timer_ticks_without_new_frames_cannot_release.test_timer_ticks_without_new_frames_cannot_release",
+    "baseline_also_fails": false,
+    "classification": "제거된 ID recovery/cache/lost 내부 또는 과거 reason 문자열 기대; v5 회귀로 대체"
+  },
+  {
+    "test": "test_driver_adapter.DriverAdapter.test_pedal_mode_and_rate_limit.test_pedal_mode_and_rate_limit",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_v4_regressions.DriverRegression.test_pedal_mode_and_rate_limit.test_pedal_mode_and_rate_limit",
+    "baseline_also_fails": true,
+    "classification": "원본 v4.2에서도 실패: 오래된 설정/설계 기대와 원본 구현의 불일치"
+  },
+  {
+    "test": "test_v4_regressions.GeometryAndScope.test_static_conflict_does_not_expire_at_prediction_horizon.test_static_conflict_does_not_expire_at_prediction_horizon",
+    "baseline_also_fails": false,
+    "classification": "ego 경로와 겹치지 않는 정지 객체를 순환 blocker로 기대하는 과거 테스트"
+  }
+]

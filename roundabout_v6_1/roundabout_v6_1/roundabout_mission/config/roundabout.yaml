@@ -1,0 +1,93 @@
+mission_indices:
+  approach: -1
+  stop_line: -1
+  entry: -1
+  conflict_start: -1
+  conflict_end: -1
+  merge_complete: -1
+  exit: -1
+circulating_conflict_indices:
+- -1
+- -1
+roi_map:
+- 0
+- 0
+- 0
+- 0
+start_hint_map:
+- -99.99
+- 315.1
+- 28.34
+start_hint_nearest_index: 1794
+start_hint_distance_m: 0.5914925691
+map_frame: map
+rate_hz: 20.0
+odom_timeout_s: 0.5
+obstacle_timeout_s: 0.6
+decision_timeout_s: 0.3
+track_hold_s: 0.4
+safe_confirm_s: 0.3
+approach_speed: 2.0
+merge_speed: 5.0
+roundabout_speed: 5.0
+exit_speed: 3.0
+max_accel: 2.5
+comfortable_decel: 1.5
+front_time_buffer_s: 0.8
+rear_time_buffer_s: 1.2
+prediction_horizon: 15.0
+min_vehicle_speed: 0.25
+direction_cos_min: 0.5
+corridor_m: 1.5
+max_path_error_m: 3.0
+lead_range_m: 35.0
+minimum_gap: 1.0
+static_minimum_gap_m: 5.0
+time_headway: 1.5
+gap_kp: 0.4
+emergency_ttc: 1.0
+emergency_gap_m: 1.5
+emergency_margin_m: 0.2
+ego_length: 4.635
+ego_width: 1.892
+ego_front_m: 3.6
+stop_margin_m: 0.5
+stop_tolerance_m: 0.2
+wait_distance_m: 1.0
+commit_distance_m: 1.0
+wheelbase_m: 3.0
+lookahead_min_m: 4.0
+lookahead_gain: 0.35
+goal_tolerance_m: 1.5
+steering_sign: 1.0
+max_steering_rad: 0.6981317008
+speed_kp: 0.3
+speed_ki: 0.0001
+speed_kd: 0.025
+max_accel_pedal: 1.0
+max_brake_pedal: 1.0
+max_accel_rate: 3.0
+max_brake_rate: 2.0
+hold_brake: 0.5
+test_speed_limit: 5.0
+minimum_merge_speed: 5.0
+maximum_merge_speed: 5.0
+cruise_speed: 2.0
+max_lateral_accel: 1.5
+lost_recheck_s: 0.3
+lost_recheck_frames: 2
+reid_max_age_s: 2.5
+reid_distance_m: 3.0
+reid_velocity_delta_mps: 3.0
+critical_track_horizon_s: 3.0
+# v5: bounded anonymous observation memory, independent of raw tracker IDs.
+entry_occlusion_hold_s: 0.8
+entry_vehicle_length_m: 4.5
+entry_vehicle_width_m: 1.8
+
+version: 6.1.0
+
+lead_relative_following_enabled: true
+lead_follow_alignment_cos_min: 0.9
+lead_follow_lateral_tolerance_m: 0.9
+lead_relative_reaction_s: 0.3

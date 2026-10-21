@@ -1,0 +1,78 @@
+{
+  "version": "6.1.0",
+  "status": "pass",
+  "checks": [
+    "5 m -> 1 m changes the running following request, not just YAML text",
+    "the original 5 m stationary-obstacle buffer stays unchanged",
+    "empty committed road preserves V6 baseline decision",
+    "rear approaching after COMMIT preserves V6 baseline decision",
+    "rear approaching before authorization preserves V6 baseline decision",
+    "stationary front obstacle preserves V6 baseline decision",
+    "present front box overlap preserves V6 baseline decision",
+    "side crossing vehicle preserves V6 baseline decision",
+    "oblique moving front is not a following exception preserves V6 baseline decision",
+    "front risk before authorization preserves V6 baseline decision",
+    "stale odometry preserves V6 baseline decision",
+    "stale perception preserves V6 baseline decision",
+    "off path preserves V6 baseline decision",
+    "imminent predicted moving lead uses a nonzero speed limit, not a full stop",
+    "near moving front pulling away does not stop the ego",
+    "matching a close moving front does not stop the ego",
+    "track ID changes do not change front following behavior",
+    "disabling the front-only feature restores V6",
+    "relative closing cap includes response delay and stopping distance",
+    "custom YAML preparation preserves controls and CSV retains front-follow diagnostics",
+    "actual PID driver brakes a closing front without Stop; rear hard-stop behavior stays unchanged",
+    "280 delayed closed-loop frames follow an accelerating/decelerating front without a predicted stop",
+    "80 stateful rear-only frames match the V6 baseline exactly",
+    "installer preserves previous package and removes mixed-version leftovers"
+  ],
+  "checks_count": 24,
+  "rear_stateful_decisions_compared": 80,
+  "original_v5_config_differences": [
+    "lead_follow_alignment_cos_min",
+    "lead_follow_lateral_tolerance_m",
+    "lead_relative_following_enabled",
+    "lead_relative_reaction_s",
+    "minimum_gap",
+    "static_minimum_gap_m",
+    "version"
+  ],
+  "python38_syntax_files": 28,
+  "examples": {
+    "base_gap": {
+      "desired_gap": 4.0,
+      "lead_gap": 4.000000000000002,
+      "target_speed": 2.000000000000001,
+      "stop_required": false,
+      "emergency": false
+    },
+    "rear approaching after COMMIT": {
+      "state": "COMMIT",
+      "stop_required": false,
+      "emergency": false,
+      "minimum_ttc": 0.17166666666666686
+    },
+    "rear approaching before authorization": {
+      "state": "WAIT",
+      "stop_required": true,
+      "emergency": true,
+      "minimum_ttc": 0.10300000000000012
+    },
+    "closing_front": {
+      "minimum_ttc": 0.7857142857142868,
+      "target_speed": 2.0,
+      "stop_required": false,
+      "emergency": false,
+      "lead_prediction_stop_suppressed": true,
+      "lead_relative_speed_cap_mps": 2.600000000000003
+    },
+    "closed_loop": {
+      "frames": 280,
+      "minimum_gap_m": 3.810946029011335,
+      "speed_command_delay_s": 0.1,
+      "model": "synthetic 3.5*accel - 5.0*brake - 0.1 m/s^2; actual captured PID/Pure Pursuit and unchanged driver"
+    }
+  },
+  "runtime_limitations": "Synthetic decision and mock installation checks; ROS Noetic/MORAI were not run. No physical no-collision guarantee."
+}

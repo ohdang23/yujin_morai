@@ -1,0 +1,51 @@
+<launch>
+  <arg name="mission_config" />
+  <arg name="enable_control" default="false" />
+  <arg name="evaluation_mode" default="false" />
+  <arg name="morai_host_ip" />
+  <arg name="bind_ip" default="0.0.0.0" />
+  <arg name="gps_port" default="3001" />
+  <arg name="imu_port" default="4001" />
+  <arg name="status_port" default="9081" />
+  <arg name="control_port" default="9093" />
+  <arg name="control_source_port" default="9094" />
+  <!-- This driver is the only CtrlCmd publisher; stop other driving launches. -->
+  <arg name="command_topic" default="/ctrl_cmd" />
+  <arg name="lidar_port" default="2001" />
+  <arg name="lidar_y_abs_m" default="40.0" />
+  <arg name="lidar_x_m" default="0.0" />
+  <arg name="lidar_y_m" default="0.0" />
+  <arg name="lidar_yaw_deg" default="0.0" />
+  <arg name="rviz" default="false" />
+  <arg name="log_dir" default="$(env HOME)/roundabout_logs" />
+  <include file="$(find morai_udp_bridge)/launch/morai_udp_bridge.launch">
+    <arg name="bind_ip" value="$(arg bind_ip)" />
+    <arg name="gps_port" value="$(arg gps_port)" /><arg name="imu_port" value="$(arg imu_port)" />
+  </include>
+  <include file="$(find morai_udp_drive_bridge)/launch/morai_udp_drive_bridge.launch">
+    <arg name="status_bind_ip" value="$(arg bind_ip)" /><arg name="status_port" value="$(arg status_port)" />
+    <arg name="control_remote_ip" value="$(arg morai_host_ip)" />
+    <arg name="control_remote_port" value="$(arg control_port)" />
+    <arg name="control_bind_port" value="$(arg control_source_port)" />
+    <arg name="command_topic" value="$(arg command_topic)" />
+  </include>
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_link" args="0 0 1.2 0 0 0 base_link gps_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="0 0 0 0 0 0 base_link imu_link 100" />
+  <include file="$(find gps_mgeo_converter)/launch/gps_mgeo_converter.launch" />
+  <include file="$(find ekf_local_enu)/launch/ekf_local_enu.launch" />
+  <include file="$(find lidar_perception)/launch/lidar_algorithm_pipeline.launch">
+    <arg name="algorithm_type" value="lidar_tracking_node.py" /><arg name="algorithm_name" value="lidar_tracking" />
+    <arg name="result_prefix" value="tracking" /><arg name="rviz_config" value="morai_lidar_tracking.rviz" />
+    <arg name="rviz" value="$(arg rviz)" /><arg name="bind_ip" value="$(arg bind_ip)" />
+    <arg name="destination_port" value="$(arg lidar_port)" /><arg name="udp_cluster_enabled" value="false" />
+    <arg name="y_abs_m" value="$(arg lidar_y_abs_m)" />
+    <arg name="lidar_x_m" value="$(arg lidar_x_m)" /><arg name="lidar_y_m" value="$(arg lidar_y_m)" />
+    <arg name="lidar_yaw_deg" value="$(arg lidar_yaw_deg)" />
+  </include>
+  <include file="$(find roundabout_mission)/launch/roundabout_test.launch">
+    <arg name="mission_config" value="$(arg mission_config)" /><arg name="enable_control" value="$(arg enable_control)" />
+    <arg name="evaluation_mode" value="$(arg evaluation_mode)" />
+    <arg name="command_topic" value="$(arg command_topic)" />
+    <arg name="log_dir" value="$(arg log_dir)" />
+  </include>
+</launch>

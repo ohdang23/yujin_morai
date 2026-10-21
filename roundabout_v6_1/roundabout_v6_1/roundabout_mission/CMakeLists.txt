@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(roundabout_mission)
+find_package(catkin REQUIRED COMPONENTS visualization_msgs geometry_msgs rospy std_msgs nav_msgs morai_msgs lidar_perception purepursuit_mgeo path_planning)
+catkin_python_setup()
+catkin_package()
+catkin_install_python(PROGRAMS scripts/roundabout_merge_gate.py scripts/roundabout_test_driver.py scripts/make_roundabout_config.py scripts/prepare_roundabout_v4.py scripts/prepare_roundabout_v5.py scripts/prepare_roundabout_v6.py scripts/roundabout_diagnose.py scripts/roundabout_record_trial.py scripts/roundabout_trial_summary.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(DIRECTORY launch config docs DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

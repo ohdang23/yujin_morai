@@ -1,0 +1,70 @@
+{
+  "seed": 123,
+  "legacy": false,
+  "vehicles": 4,
+  "perturb": true,
+  "outcome": "exit",
+  "simulated_seconds": 127.2,
+  "max_path_error": 0.257,
+  "states": [
+    "WAIT",
+    "COMMIT",
+    "WAIT",
+    "COMMIT",
+    "FOLLOW",
+    "EXIT"
+  ],
+  "reasons": {
+    "lead_following": 91,
+    "wait": 20,
+    "waiting_for_safe_gap": 231,
+    "track_loss_stopping": 2,
+    "track_loss_rechecking_gap": 34,
+    "track_loss_waiting_current_gap": 729,
+    "track_loss_recovered_recheck_gap": 1,
+    "commit": 112,
+    "follow": 52,
+    "mission_complete": 1
+  },
+  "final_reason": "mission_complete",
+  "final_speed": 3.284484858258073,
+  "final_s": 933.0651161509821,
+  "gate_ms_p95": 8.16,
+  "wall_seconds": 11.45,
+  "traffic": [
+    {
+      "s": 0.6283631862113319,
+      "v": 2.4359333876131615,
+      "length": 4.425346172846394,
+      "width": 1.6753901644569074,
+      "id": 1
+    },
+    {
+      "s": 38.79483856198456,
+      "v": 2.190768330511612,
+      "length": 4.876707140118745,
+      "width": 1.832538388956776,
+      "id": 2
+    },
+    {
+      "s": 66.18594348028087,
+      "v": 2.7983119836098496,
+      "length": 4.180258299882464,
+      "width": 1.8336574762402686,
+      "id": 3
+    },
+    {
+      "s": 86.883316309904,
+      "v": 2.008352767896114,
+      "length": 4.5269652769532644,
+      "width": 1.6613294498252962,
+      "id": 4
+    }
+  ],
+  "model": {
+    "throttle_gain": 4.396399196731986,
+    "brake_gain": 5.604815442188774,
+    "drag": 0.07261835894943452,
+    "latency": 0.1
+  }
+}

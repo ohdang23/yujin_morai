@@ -1,0 +1,1803 @@
+[
+  {
+    "seed": 101,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 31,
+      "waiting_for_safe_gap": 275,
+      "track_loss_waiting_current_gap": 894
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 13.02,
+    "wall_seconds": 13.88,
+    "traffic": [
+      {
+        "s": 6.973825590054776,
+        "v": 2.9737724776706838,
+        "length": 6.3783788747138885,
+        "width": 2.2467834811737557,
+        "id": 1
+      },
+      {
+        "s": 24.259298822739837,
+        "v": 5.317353222650302,
+        "length": 3.750830394082888,
+        "width": 1.7551873746683686,
+        "id": 2
+      },
+      {
+        "s": 40.769538569327366,
+        "v": 5.462113729976588,
+        "length": 3.743318689254159,
+        "width": 2.279774165947641,
+        "id": 3
+      },
+      {
+        "s": 56.80516986474242,
+        "v": 2.966433143655455,
+        "length": 3.3110224944222053,
+        "width": 2.1389243556270716,
+        "id": 4
+      },
+      {
+        "s": 79.012718434745,
+        "v": 4.358411319042666,
+        "length": 4.141098933934205,
+        "width": 2.0461988430756066,
+        "id": 5
+      },
+      {
+        "s": 98.11490539060864,
+        "v": 3.041338520605078,
+        "length": 4.505539127714972,
+        "width": 1.8130028683559851,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.666198719132071,
+      "brake_gain": 6.73508724151083,
+      "drag": 0.08720587978617296,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 102,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 23.2,
+    "max_path_error": 0.252,
+    "states": [
+      "WAIT",
+      "READY",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 8,
+      "ready": 15,
+      "commit": 109,
+      "lead_following": 48,
+      "follow": 52,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 7.5,
+    "wall_seconds": 2.09,
+    "traffic": [
+      {
+        "s": 1.778054476645003,
+        "v": 5.0798264353811176,
+        "length": 3.593900378349835,
+        "width": 2.0987548631626454,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.411748739136207,
+      "brake_gain": 6.076506208175456,
+      "drag": 0.08469990534457872,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 103,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 24.1,
+    "max_path_error": 0.241,
+    "states": [
+      "WAIT",
+      "READY",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 8,
+      "lead_following": 61,
+      "commit": 117,
+      "follow": 55,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 8.68,
+    "wall_seconds": 2.59,
+    "traffic": [
+      {
+        "s": 11.748601440873292,
+        "v": 4.281491381459242,
+        "length": 5.515964619350827,
+        "width": 2.1144203698097375,
+        "id": 1
+      },
+      {
+        "s": 58.539724075093204,
+        "v": 2.3901898455756205,
+        "length": 5.109601326934988,
+        "width": 1.6853436519058775,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.073339951721963,
+      "brake_gain": 6.834554232710566,
+      "drag": 0.09488601168253803,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 104,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 6,
+      "lead_following": 24,
+      "waiting_for_safe_gap": 336,
+      "track_loss_waiting_current_gap": 834
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 9.78,
+    "wall_seconds": 11.25,
+    "traffic": [
+      {
+        "s": 11.519531162339465,
+        "v": 6.359318435112864,
+        "length": 5.561668531578393,
+        "width": 1.7593356853255664,
+        "id": 1
+      },
+      {
+        "s": 41.274977301350596,
+        "v": 5.5690531181213565,
+        "length": 5.823482951983616,
+        "width": 1.6117062817419607,
+        "id": 2
+      },
+      {
+        "s": 76.61486362200255,
+        "v": 6.477024791653446,
+        "length": 3.413407823199091,
+        "width": 2.058730202372728,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.9945566099369656,
+      "brake_gain": 6.468253203416544,
+      "drag": 0.09449096924157949,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 105,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 30,
+      "waiting_for_safe_gap": 847,
+      "track_loss_waiting_current_gap": 323
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 10.65,
+    "wall_seconds": 11.08,
+    "traffic": [
+      {
+        "s": 10.53719218891791,
+        "v": 3.745593234178519,
+        "length": 5.767532809670991,
+        "width": 2.266111243526554,
+        "id": 1
+      },
+      {
+        "s": 31.727077139220288,
+        "v": 5.841609789821298,
+        "length": 4.171445429508151,
+        "width": 1.7146519839381356,
+        "id": 2
+      },
+      {
+        "s": 60.140540844386095,
+        "v": 5.756140689898707,
+        "length": 3.5164849597958563,
+        "width": 2.0614773845464462,
+        "id": 3
+      },
+      {
+        "s": 88.15651906600135,
+        "v": 2.845161484434855,
+        "length": 4.505410493571676,
+        "width": 1.8705237089180402,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.19053348709013,
+      "brake_gain": 6.821687123237757,
+      "drag": 0.0968145077456884,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 106,
+    "legacy": false,
+    "vehicles": 5,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 31,
+      "waiting_for_safe_gap": 185,
+      "track_loss_waiting_current_gap": 984
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 11.88,
+    "wall_seconds": 12.39,
+    "traffic": [
+      {
+        "s": 8.528204796749913,
+        "v": 6.505537803442661,
+        "length": 3.0586728672972825,
+        "width": 2.25944426185501,
+        "id": 1
+      },
+      {
+        "s": 32.236403355359926,
+        "v": 2.28342477803293,
+        "length": 5.822146463447882,
+        "width": 2.1631473395579004,
+        "id": 2
+      },
+      {
+        "s": 47.02121937860617,
+        "v": 6.8566559886223395,
+        "length": 4.273772176568847,
+        "width": 1.9156220109630286,
+        "id": 3
+      },
+      {
+        "s": 74.99820141493365,
+        "v": 5.451015137985111,
+        "length": 5.612879329461156,
+        "width": 1.7946889243929878,
+        "id": 4
+      },
+      {
+        "s": 95.3454792344542,
+        "v": 2.6871049546199908,
+        "length": 3.961836291676361,
+        "width": 1.9435118224178185,
+        "id": 5
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.6117678093314196,
+      "brake_gain": 6.023251630338176,
+      "drag": 0.09260276104957063,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 107,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 31,
+      "waiting_for_safe_gap": 125,
+      "track_loss_waiting_current_gap": 1044
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 13.05,
+    "wall_seconds": 14.29,
+    "traffic": [
+      {
+        "s": 2.957783516032298,
+        "v": 4.906449651953898,
+        "length": 6.4029835242397795,
+        "width": 2.0604547947473506,
+        "id": 1
+      },
+      {
+        "s": 24.44387751398493,
+        "v": 3.5449191986380924,
+        "length": 3.48235808674945,
+        "width": 2.2991177855490674,
+        "id": 2
+      },
+      {
+        "s": 46.35922671888067,
+        "v": 3.250576909468042,
+        "length": 5.080392007690833,
+        "width": 2.0961402182406554,
+        "id": 3
+      },
+      {
+        "s": 66.84225051062626,
+        "v": 3.4017416106646636,
+        "length": 4.097111829863538,
+        "width": 1.7311004685973788,
+        "id": 4
+      },
+      {
+        "s": 81.69177522837582,
+        "v": 6.609910329927109,
+        "length": 5.57084711917566,
+        "width": 1.6977073287286948,
+        "id": 5
+      },
+      {
+        "s": 97.73325688209282,
+        "v": 2.382549053281211,
+        "length": 3.563221415293599,
+        "width": 1.9450967783583375,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.730043271087424,
+      "brake_gain": 5.905859832708339,
+      "drag": 0.06972474016933486,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 108,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 23.2,
+    "max_path_error": 0.246,
+    "states": [
+      "WAIT",
+      "READY",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 21,
+      "ready": 1,
+      "lead_following": 44,
+      "commit": 115,
+      "follow": 51,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 4.77,
+    "wall_seconds": 1.48,
+    "traffic": [
+      {
+        "s": 1.566242758808043,
+        "v": 6.0781718151625785,
+        "length": 6.081542248399725,
+        "width": 1.8695645742847946,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.91484411855937,
+      "brake_gain": 5.793822530321969,
+      "drag": 0.06323648402078234,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 109,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 29,
+      "waiting_for_safe_gap": 1171
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "gate_ms_p95": 8.62,
+    "wall_seconds": 10.05,
+    "traffic": [
+      {
+        "s": 3.3549964632704143,
+        "v": 4.296394871549449,
+        "length": 4.915307601557476,
+        "width": 1.6710504111600006,
+        "id": 1
+      },
+      {
+        "s": 61.98748201737835,
+        "v": 6.781850513024958,
+        "length": 4.969384686708014,
+        "width": 1.9632109273575307,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.68489567453527,
+      "brake_gain": 6.176472241125835,
+      "drag": 0.07100750280261986,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 110,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 10,
+      "lead_following": 24,
+      "waiting_for_safe_gap": 1121,
+      "new_conflict_before_entry": 1,
+      "track_loss_waiting_current_gap": 21,
+      "track_loss_rechecking_gap": 22,
+      "track_loss_recovered_recheck_gap": 1
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "gate_ms_p95": 9.72,
+    "wall_seconds": 11.29,
+    "traffic": [
+      {
+        "s": 11.211143552447675,
+        "v": 3.9401736480984297,
+        "length": 5.875744187090852,
+        "width": 1.7734344205857773,
+        "id": 1
+      },
+      {
+        "s": 43.092004635334696,
+        "v": 3.3681209697605494,
+        "length": 4.897071923397203,
+        "width": 1.652494121946576,
+        "id": 2
+      },
+      {
+        "s": 79.61549531765472,
+        "v": 3.580254761329992,
+        "length": 3.140251851879615,
+        "width": 2.170929213317044,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.868604236254841,
+      "brake_gain": 5.725662173055649,
+      "drag": 0.08529151797682064,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 111,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 28,
+      "wait": 1,
+      "waiting_for_safe_gap": 127,
+      "track_loss_waiting_current_gap": 1020,
+      "track_loss_rechecking_gap": 24
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 10.7,
+    "wall_seconds": 11.1,
+    "traffic": [
+      {
+        "s": 9.926046784107768,
+        "v": 3.063815575880863,
+        "length": 6.298818052604129,
+        "width": 1.9457438017125888,
+        "id": 1
+      },
+      {
+        "s": 32.75149786786811,
+        "v": 5.085823387342282,
+        "length": 3.5937029511038965,
+        "width": 1.7355285196642476,
+        "id": 2
+      },
+      {
+        "s": 61.02064411003825,
+        "v": 3.1485224285465003,
+        "length": 5.346504324082322,
+        "width": 1.8913620738316435,
+        "id": 3
+      },
+      {
+        "s": 88.54377557955695,
+        "v": 3.388731650193849,
+        "length": 3.7727600360068387,
+        "width": 2.10133394976895,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.8538282003918045,
+      "brake_gain": 6.025359937920366,
+      "drag": 0.09216165722403569,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 112,
+    "legacy": false,
+    "vehicles": 5,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 23,
+      "wait": 6,
+      "waiting_for_safe_gap": 67,
+      "track_loss_waiting_current_gap": 1104
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 11.96,
+    "wall_seconds": 12.29,
+    "traffic": [
+      {
+        "s": 5.7749596088797,
+        "v": 5.330437786124688,
+        "length": 5.169417932972312,
+        "width": 2.089610241543363,
+        "id": 1
+      },
+      {
+        "s": 33.21151274879375,
+        "v": 5.759067455811631,
+        "length": 3.5690187906378545,
+        "width": 1.7546461386114522,
+        "id": 2
+      },
+      {
+        "s": 50.22624673988902,
+        "v": 3.9506380556300362,
+        "length": 6.370387325635109,
+        "width": 2.110105448359494,
+        "id": 3
+      },
+      {
+        "s": 72.7736374270668,
+        "v": 3.7577048836351206,
+        "length": 3.7958038901365936,
+        "width": 2.0219551091753973,
+        "id": 4
+      },
+      {
+        "s": 100.62386067502528,
+        "v": 2.8366709108113817,
+        "length": 4.582961081128948,
+        "width": 1.8412989421582566,
+        "id": 5
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.414254315931394,
+      "brake_gain": 5.881335500864445,
+      "drag": 0.06261075349702232,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 113,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 31,
+      "waiting_for_safe_gap": 95,
+      "track_loss_waiting_current_gap": 1074
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 13.33,
+    "wall_seconds": 14.97,
+    "traffic": [
+      {
+        "s": 0.3666638422484887,
+        "v": 6.338090189244551,
+        "length": 5.527266028979962,
+        "width": 1.6125117311989232,
+        "id": 1
+      },
+      {
+        "s": 25.252870875993143,
+        "v": 3.193383166062371,
+        "length": 6.086161100186672,
+        "width": 2.1974843185213224,
+        "id": 2
+      },
+      {
+        "s": 40.92707164639983,
+        "v": 4.992604684011107,
+        "length": 4.732245034220671,
+        "width": 1.7970308222763816,
+        "id": 3
+      },
+      {
+        "s": 61.15794574396493,
+        "v": 3.9737148357091403,
+        "length": 4.636059730088708,
+        "width": 2.2664438837670495,
+        "id": 4
+      },
+      {
+        "s": 83.38356852042864,
+        "v": 2.1914616122991157,
+        "length": 4.233335350506899,
+        "width": 2.277583159001674,
+        "id": 5
+      },
+      {
+        "s": 102.39856858575519,
+        "v": 5.03182111187772,
+        "length": 5.2628060223818025,
+        "width": 2.0789947302930467,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.7465313331383756,
+      "brake_gain": 6.109990730902568,
+      "drag": 0.07110843559560193,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 114,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 30.8,
+    "max_path_error": 0.245,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 30,
+      "waiting_for_safe_gap": 46,
+      "lead_following": 77,
+      "commit": 100,
+      "follow": 55,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 7.43,
+    "wall_seconds": 2.24,
+    "traffic": [
+      {
+        "s": 2.8912260141419353,
+        "v": 2.489436139775459,
+        "length": 5.330741318839542,
+        "width": 1.7704318913698316,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.436397556748882,
+      "brake_gain": 5.730309000447364,
+      "drag": 0.09923272953350415,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 115,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 19,
+      "lead_following": 43,
+      "waiting_for_safe_gap": 1107,
+      "new_conflict_before_entry": 6,
+      "commit": 25
+    },
+    "final_reason": "waiting_for_safe_gap",
+    "gate_ms_p95": 8.56,
+    "wall_seconds": 9.36,
+    "traffic": [
+      {
+        "s": 10.750828500084198,
+        "v": 2.9846749818840634,
+        "length": 3.396825215821616,
+        "width": 1.6785684617918841,
+        "id": 1
+      },
+      {
+        "s": 65.01255167507576,
+        "v": 6.290014861110291,
+        "length": 6.470057107672698,
+        "width": 2.074920217260057,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.4600088218323934,
+      "brake_gain": 6.530975882031972,
+      "drag": 0.07931318314723765,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 116,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 92.9,
+    "max_path_error": 0.256,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 11,
+      "lead_following": 92,
+      "waiting_for_safe_gap": 677,
+      "commit": 98,
+      "follow": 51,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 9.68,
+    "wall_seconds": 8.16,
+    "traffic": [
+      {
+        "s": 9.856290377275071,
+        "v": 4.999025901638852,
+        "length": 5.527469143595622,
+        "width": 1.6061109790726897,
+        "id": 1
+      },
+      {
+        "s": 45.06246306004479,
+        "v": 5.68812170372089,
+        "length": 4.682513891803318,
+        "width": 1.9386846905129596,
+        "id": 2
+      },
+      {
+        "s": 77.56593159142975,
+        "v": 4.039249087950527,
+        "length": 5.042408916971741,
+        "width": 2.2057133008051175,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.359325398577674,
+      "brake_gain": 6.17792804983134,
+      "drag": 0.07260686604772389,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 117,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 87.6,
+    "max_path_error": 0.25,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "lead_following": 70,
+      "wait": 1,
+      "waiting_for_safe_gap": 602,
+      "commit": 147,
+      "follow": 56,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 10.98,
+    "wall_seconds": 9.16,
+    "traffic": [
+      {
+        "s": 2.8812363607950746,
+        "v": 2.8220122460196206,
+        "length": 4.39946908839656,
+        "width": 1.7110586404128687,
+        "id": 1
+      },
+      {
+        "s": 32.860330669874784,
+        "v": 2.5867289645945006,
+        "length": 4.8453474068443345,
+        "width": 1.9963779354968958,
+        "id": 2
+      },
+      {
+        "s": 60.146793457258255,
+        "v": 6.052777799063238,
+        "length": 3.1115264106407996,
+        "width": 2.2827658948473384,
+        "id": 3
+      },
+      {
+        "s": 89.15369045033802,
+        "v": 2.8201345218766862,
+        "length": 4.351407157225025,
+        "width": 1.8959560572363843,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.5104462000709447,
+      "brake_gain": 6.554776274690356,
+      "drag": 0.08558169966408999,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 118,
+    "legacy": false,
+    "vehicles": 5,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 30,
+      "waiting_for_safe_gap": 907,
+      "track_loss_waiting_current_gap": 263
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 12.03,
+    "wall_seconds": 13.22,
+    "traffic": [
+      {
+        "s": 8.531787213555415,
+        "v": 2.9126927819911628,
+        "length": 3.346554986828336,
+        "width": 1.8535911903213649,
+        "id": 1
+      },
+      {
+        "s": 31.60104048066315,
+        "v": 3.518796433954302,
+        "length": 6.100310914904615,
+        "width": 2.025467809631472,
+        "id": 2
+      },
+      {
+        "s": 50.8626176318845,
+        "v": 5.040909668133786,
+        "length": 4.992554908996181,
+        "width": 1.9618056520988179,
+        "id": 3
+      },
+      {
+        "s": 76.91025598052697,
+        "v": 5.426664163211877,
+        "length": 4.798905148732166,
+        "width": 1.6039924453157963,
+        "id": 4
+      },
+      {
+        "s": 92.04801920735454,
+        "v": 2.660349347002229,
+        "length": 6.074322827755804,
+        "width": 2.2711674228825007,
+        "id": 5
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.065746861880765,
+      "brake_gain": 6.6325316182211385,
+      "drag": 0.0625777848431932,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 119,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 30,
+      "waiting_for_safe_gap": 336,
+      "track_loss_waiting_current_gap": 834
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 13.36,
+    "wall_seconds": 15.25,
+    "traffic": [
+      {
+        "s": 11.115754302084168,
+        "v": 2.899094743226581,
+        "length": 5.744311807754466,
+        "width": 1.9770518680344298,
+        "id": 1
+      },
+      {
+        "s": 30.392017270108347,
+        "v": 4.766186250584731,
+        "length": 4.514465886204149,
+        "width": 1.6555082688686544,
+        "id": 2
+      },
+      {
+        "s": 42.44424748514558,
+        "v": 6.819493973378887,
+        "length": 6.466960613613572,
+        "width": 1.7771753196304607,
+        "id": 3
+      },
+      {
+        "s": 65.69461752607234,
+        "v": 3.0545531090766196,
+        "length": 5.040833123532689,
+        "width": 1.8838114790172154,
+        "id": 4
+      },
+      {
+        "s": 77.68489029744657,
+        "v": 4.152303932234586,
+        "length": 5.563449809058563,
+        "width": 2.0744586941674235,
+        "id": 5
+      },
+      {
+        "s": 97.34313405973604,
+        "v": 2.6530143865036964,
+        "length": 3.0444648290444953,
+        "width": 2.2449026812925736,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.278382205137005,
+      "brake_gain": 6.239449865495909,
+      "drag": 0.07665884700456427,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 120,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 26.1,
+    "max_path_error": 0.251,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 29,
+      "waiting_for_safe_gap": 14,
+      "lead_following": 78,
+      "commit": 90,
+      "follow": 50,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 7.47,
+    "wall_seconds": 1.83,
+    "traffic": [
+      {
+        "s": 6.17925544809299,
+        "v": 2.943240856576879,
+        "length": 6.33521834487547,
+        "width": 2.0446883567698486,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.384492784786357,
+      "brake_gain": 6.910636422736113,
+      "drag": 0.06364953914736081,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 121,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 113.7,
+    "max_path_error": 0.257,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 29,
+      "waiting_for_safe_gap": 882,
+      "commit": 111,
+      "new_conflict_before_entry": 1,
+      "lead_following": 61,
+      "follow": 53,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 8.63,
+    "wall_seconds": 9.24,
+    "traffic": [
+      {
+        "s": 1.0476178423897995,
+        "v": 4.919040429344761,
+        "length": 4.392130223587172,
+        "width": 2.240262600209673,
+        "id": 1
+      },
+      {
+        "s": 63.334678295446345,
+        "v": 4.612622796643355,
+        "length": 6.28359235194897,
+        "width": 1.7999761702808468,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.77289009433758,
+      "brake_gain": 6.133202326204487,
+      "drag": 0.08704096547560101,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 122,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 20,
+      "lead_following": 8,
+      "waiting_for_safe_gap": 429,
+      "track_loss_waiting_current_gap": 735,
+      "track_loss_rechecking_gap": 8
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 9.83,
+    "wall_seconds": 11.4,
+    "traffic": [
+      {
+        "s": 6.120222080921754,
+        "v": 4.984990435537895,
+        "length": 4.0580436563744975,
+        "width": 2.251022149992652,
+        "id": 1
+      },
+      {
+        "s": 46.06412295219702,
+        "v": 5.805072166778337,
+        "length": 4.603358599602336,
+        "width": 2.184881631049297,
+        "id": 2
+      },
+      {
+        "s": 83.42081127179294,
+        "v": 4.962771548340906,
+        "length": 3.3710285057264624,
+        "width": 1.9151001259796345,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.955549831409135,
+      "brake_gain": 6.33712771979494,
+      "drag": 0.07513821951343239,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 123,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "stopped_inside",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.231,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT",
+      "COMMIT"
+    ],
+    "reasons": {
+      "lead_following": 91,
+      "wait": 20,
+      "waiting_for_safe_gap": 231,
+      "track_loss_stopping": 2,
+      "track_loss_rechecking_gap": 34,
+      "track_loss_waiting_current_gap": 729,
+      "track_loss_recovered_recheck_gap": 1,
+      "commit": 92
+    },
+    "final_reason": "commit",
+    "gate_ms_p95": 10.96,
+    "wall_seconds": 11.56,
+    "traffic": [
+      {
+        "s": 0.6283631862113319,
+        "v": 2.4359333876131615,
+        "length": 4.425346172846394,
+        "width": 1.6753901644569074,
+        "id": 1
+      },
+      {
+        "s": 38.79483856198456,
+        "v": 2.190768330511612,
+        "length": 4.876707140118745,
+        "width": 1.832538388956776,
+        "id": 2
+      },
+      {
+        "s": 66.18594348028087,
+        "v": 2.7983119836098496,
+        "length": 4.180258299882464,
+        "width": 1.8336574762402686,
+        "id": 3
+      },
+      {
+        "s": 86.883316309904,
+        "v": 2.008352767896114,
+        "length": 4.5269652769532644,
+        "width": 1.6613294498252962,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.396399196731986,
+      "brake_gain": 5.604815442188774,
+      "drag": 0.07261835894943452,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 124,
+    "legacy": false,
+    "vehicles": 5,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 30,
+      "waiting_for_safe_gap": 367,
+      "track_loss_waiting_current_gap": 803
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 9.45,
+    "wall_seconds": 11.91,
+    "traffic": [
+      {
+        "s": 11.529369081062791,
+        "v": 4.741276547526447,
+        "length": 3.619778218238395,
+        "width": 2.2758430826775853,
+        "id": 1
+      },
+      {
+        "s": 27.378629914583872,
+        "v": 5.937677717363948,
+        "length": 3.1105633907669312,
+        "width": 1.715832577483463,
+        "id": 2
+      },
+      {
+        "s": 56.38527824582502,
+        "v": 6.077637136770207,
+        "length": 3.0761424966208164,
+        "width": 1.9316795738914867,
+        "id": 3
+      },
+      {
+        "s": 72.25997399403266,
+        "v": 3.1460347927533037,
+        "length": 3.3545985438753294,
+        "width": 1.8212357107259936,
+        "id": 4
+      },
+      {
+        "s": 91.23901077205045,
+        "v": 2.9561327013688765,
+        "length": 6.023924054738671,
+        "width": 1.8495038045672187,
+        "id": 5
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.9430122571601585,
+      "brake_gain": 6.097987225318424,
+      "drag": 0.06424212558695694,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 125,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.005,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 30,
+      "waiting_for_safe_gap": 186,
+      "track_loss_waiting_current_gap": 960,
+      "track_loss_rechecking_gap": 24
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 12.05,
+    "wall_seconds": 13.32,
+    "traffic": [
+      {
+        "s": 10.800698629867853,
+        "v": 3.1126614298086674,
+        "length": 5.828163538838122,
+        "width": 1.8106585241633641,
+        "id": 1
+      },
+      {
+        "s": 27.499798748308507,
+        "v": 3.755342302873343,
+        "length": 5.1262787511281696,
+        "width": 2.030480227934521,
+        "id": 2
+      },
+      {
+        "s": 37.358393352197254,
+        "v": 5.543802113820221,
+        "length": 3.54170255469809,
+        "width": 1.95308998575901,
+        "id": 3
+      },
+      {
+        "s": 65.88855877398476,
+        "v": 5.17876290902988,
+        "length": 5.6299892209567055,
+        "width": 1.8055221498787264,
+        "id": 4
+      },
+      {
+        "s": 80.49343296820042,
+        "v": 2.934040913997868,
+        "length": 4.716265836866567,
+        "width": 1.7004910188344684,
+        "id": 5
+      },
+      {
+        "s": 104.37152928105563,
+        "v": 3.3889497782074467,
+        "length": 5.121268162236348,
+        "width": 1.9741973362482788,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.143727202279283,
+      "brake_gain": 6.838430888098362,
+      "drag": 0.08559355488755435,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 126,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 22.8,
+    "max_path_error": 0.255,
+    "states": [
+      "WAIT",
+      "READY",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 8,
+      "ready": 10,
+      "lead_following": 52,
+      "commit": 107,
+      "follow": 51,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 5.04,
+    "wall_seconds": 1.46,
+    "traffic": [
+      {
+        "s": 6.870920872111698,
+        "v": 4.89031947387293,
+        "length": 4.597215379522922,
+        "width": 2.0515904122791024,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.207768986525808,
+      "brake_gain": 6.209220680173335,
+      "drag": 0.06628179331938139,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 127,
+    "legacy": false,
+    "vehicles": 2,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT"
+    ],
+    "reasons": {
+      "wait": 29,
+      "waiting_for_safe_gap": 331,
+      "commit": 5,
+      "new_conflict_before_entry": 1,
+      "track_loss_waiting_current_gap": 820,
+      "track_loss_rechecking_gap": 14
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 5.71,
+    "wall_seconds": 8.71,
+    "traffic": [
+      {
+        "s": 0.5349095385400862,
+        "v": 5.119514457154899,
+        "length": 4.974179129144395,
+        "width": 1.6686498263217262,
+        "id": 1
+      },
+      {
+        "s": 56.318937763984586,
+        "v": 6.7006243170435855,
+        "length": 4.428437004190087,
+        "width": 1.8094354754114925,
+        "id": 2
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.501943825214827,
+      "brake_gain": 6.9012944168181525,
+      "drag": 0.07240247499387846,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 128,
+    "legacy": false,
+    "vehicles": 3,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 28.8,
+    "max_path_error": 0.246,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "lead_following": 100,
+      "wait": 2,
+      "waiting_for_safe_gap": 24,
+      "commit": 108,
+      "follow": 54,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 9.26,
+    "wall_seconds": 2.46,
+    "traffic": [
+      {
+        "s": 11.280409084210149,
+        "v": 3.1832406895482093,
+        "length": 4.790289649918039,
+        "width": 1.6938295084106811,
+        "id": 1
+      },
+      {
+        "s": 37.652570965741475,
+        "v": 2.7710493102155143,
+        "length": 5.232929072441891,
+        "width": 1.776127970519464,
+        "id": 2
+      },
+      {
+        "s": 82.6328052284307,
+        "v": 5.565644170800345,
+        "length": 4.9420905973891145,
+        "width": 1.646529914759026,
+        "id": 3
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.668371681454377,
+      "brake_gain": 5.936404277689414,
+      "drag": 0.0748757169016902,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 129,
+    "legacy": false,
+    "vehicles": 4,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 21,
+      "wait": 11,
+      "waiting_for_safe_gap": 784,
+      "new_conflict_before_entry": 1,
+      "track_loss_waiting_current_gap": 383
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 7.9,
+    "wall_seconds": 10.61,
+    "traffic": [
+      {
+        "s": 7.03317322147149,
+        "v": 5.910145182921456,
+        "length": 3.95129049689775,
+        "width": 2.2190585452221385,
+        "id": 1
+      },
+      {
+        "s": 38.640806613531744,
+        "v": 6.775581560984315,
+        "length": 5.208036659557031,
+        "width": 1.8305807158776575,
+        "id": 2
+      },
+      {
+        "s": 65.80122174043582,
+        "v": 2.559359927019856,
+        "length": 4.919643562555681,
+        "width": 1.6956232389407215,
+        "id": 3
+      },
+      {
+        "s": 93.39186449019147,
+        "v": 4.830589757563545,
+        "length": 5.736001553337712,
+        "width": 1.6968893247620578,
+        "id": 4
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.595000102319467,
+      "brake_gain": 6.691956681656627,
+      "drag": 0.06536395757149903,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 130,
+    "legacy": false,
+    "vehicles": 5,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 35.1,
+    "max_path_error": 0.243,
+    "states": [
+      "WAIT",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "lead_following": 108,
+      "waiting_for_safe_gap": 74,
+      "commit": 112,
+      "follow": 57,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 9.58,
+    "wall_seconds": 3.53,
+    "traffic": [
+      {
+        "s": 6.237335302722244,
+        "v": 3.3666084328486185,
+        "length": 5.592795378049406,
+        "width": 2.1584070899196326,
+        "id": 1
+      },
+      {
+        "s": 30.15130145133503,
+        "v": 2.109683698354731,
+        "length": 3.8400455529543667,
+        "width": 1.8368754629443618,
+        "id": 2
+      },
+      {
+        "s": 56.48509540517131,
+        "v": 5.291523230957679,
+        "length": 4.850954045304077,
+        "width": 2.069182392978778,
+        "id": 3
+      },
+      {
+        "s": 68.41895980614785,
+        "v": 5.416931962629453,
+        "length": 5.286761752917327,
+        "width": 1.7466058297070193,
+        "id": 4
+      },
+      {
+        "s": 93.84531171911384,
+        "v": 4.070656717852218,
+        "length": 6.346524716424452,
+        "width": 1.8597050018782584,
+        "id": 5
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.541377831116339,
+      "brake_gain": 6.721147419876997,
+      "drag": 0.09457052213675057,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 131,
+    "legacy": false,
+    "vehicles": 6,
+    "perturb": true,
+    "outcome": "waiting",
+    "simulated_seconds": 119.95,
+    "max_path_error": 0.006,
+    "states": [
+      "WAIT"
+    ],
+    "reasons": {
+      "lead_following": 29,
+      "waiting_for_safe_gap": 38,
+      "track_loss_waiting_current_gap": 1133
+    },
+    "final_reason": "track_loss_waiting_current_gap",
+    "gate_ms_p95": 10.25,
+    "wall_seconds": 13.07,
+    "traffic": [
+      {
+        "s": 3.7852222656413415,
+        "v": 5.849341590255451,
+        "length": 3.3065546108420927,
+        "width": 1.8007767186453751,
+        "id": 1
+      },
+      {
+        "s": 23.339316305729433,
+        "v": 6.4783817277546065,
+        "length": 4.218325551432843,
+        "width": 2.015693159966094,
+        "id": 2
+      },
+      {
+        "s": 38.5112350067282,
+        "v": 2.8593581327106543,
+        "length": 5.447094290837268,
+        "width": 1.987119208857724,
+        "id": 3
+      },
+      {
+        "s": 64.60546030423552,
+        "v": 4.20872323876638,
+        "length": 4.711513240779524,
+        "width": 1.7403382834986538,
+        "id": 4
+      },
+      {
+        "s": 77.2953494760779,
+        "v": 2.25428539971718,
+        "length": 3.5873633709462416,
+        "width": 1.9154652357747248,
+        "id": 5
+      },
+      {
+        "s": 100.3695296408318,
+        "v": 5.6879820453743655,
+        "length": 5.249766774609395,
+        "width": 2.1708812327591636,
+        "id": 6
+      }
+    ],
+    "model": {
+      "throttle_gain": 4.6058715812780875,
+      "brake_gain": 5.513162490705353,
+      "drag": 0.09551598661214103,
+      "latency": 0.1
+    }
+  },
+  {
+    "seed": 132,
+    "legacy": false,
+    "vehicles": 1,
+    "perturb": true,
+    "outcome": "exit",
+    "simulated_seconds": 24.4,
+    "max_path_error": 0.243,
+    "states": [
+      "WAIT",
+      "READY",
+      "COMMIT",
+      "FOLLOW",
+      "EXIT"
+    ],
+    "reasons": {
+      "wait": 8,
+      "ready": 16,
+      "lead_following": 67,
+      "commit": 97,
+      "follow": 56,
+      "mission_complete": 1
+    },
+    "final_reason": "mission_complete",
+    "gate_ms_p95": 4.53,
+    "wall_seconds": 1.51,
+    "traffic": [
+      {
+        "s": 4.949145927051347,
+        "v": 4.038610505396518,
+        "length": 6.142154515523174,
+        "width": 2.2286637233872026,
+        "id": 1
+      }
+    ],
+    "model": {
+      "throttle_gain": 3.9606516970975463,
+      "brake_gain": 6.772876763081495,
+      "drag": 0.09832945489662229,
+      "latency": 0.1
+    }
+  }
+]
